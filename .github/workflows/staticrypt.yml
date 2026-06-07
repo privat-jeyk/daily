@@ -23,10 +23,8 @@ jobs:
 
       - name: Passwortschutz einbauen
         run: |
-          # Liest dein Passwort aus den GitHub Secrets
           PASSWORD="${{ secrets.STATICRYPT_PASSWORD }}"
           
-          # Erstellt die Passwort-Sperre als neue index.html
           cat << 'EOF' > encrypted_index.html
           <!DOCTYPE html>
           <html>
@@ -48,10 +46,8 @@ jobs:
               <br>
               <button onclick="check()">Entsperren</button>
             </div>
-            <div id="content" style="display:none;"></div>
 
             <script>
-              // Das echte Passwort wird vom Roboter hier sicher als Hash hinterlegt
               const hash = "SECRET_HASH_PLACEHOLDER";
               
               async function check() {
@@ -63,29 +59,36 @@ jobs:
                 const inputHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
                 
                 if (inputHash === hash) {
-                  document.body.innerHTML = sessionStorage.getItem('page_data');
+                  // Dekodiert den Base64-String korrekt mit UTF-8 für Emojis und Umlaute
+                  const binaryString = atob(sessionStorage.getItem('page_data'));
+                  const bytes = new Uint8Array(binaryString.length);
+                  for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                  }
+                  const decodedText = new TextDecoder('utf-8').decode(bytes);
+                  
+                  document.open();
+                  document.write(decodedText);
+                  document.close();
                 } else {
                   alert('Falsches Passwort!');
                 }
               }
 
-              // Lädt die originale Webseite im Hintergrund in den Speicher
               const rawData = `ORIGINAL_DATA_PLACEHOLDER`;
-              sessionStorage.setItem('page_data', atob(rawData));
+              sessionStorage.setItem('page_data', rawData);
             </script>
           </body>
           </html>
           EOF
 
-          # Berechnet den sicheren SHA-256 Hash deines Passworts
           PASSWORD_HASH=$(echo -n "$PASSWORD" | sha256sum | cut -d' ' -f1)
           sed -i "s/SECRET_HASH_PLACEHOLDER/$PASSWORD_HASH/g" encrypted_index.html
 
-          # Konvertiert deine originale index.html in unlesbaren Base64-Code
+          # Konvertiert die Datei absolut sauber in Base64
           ORIGINAL_BASE64=$(base64 -w 0 index.html)
           sed -i "s|ORIGINAL_DATA_PLACEHOLDER|$ORIGINAL_BASE64|g" encrypted_index.html
 
-          # Ersetzt die originale Datei für den Upload
           mv encrypted_index.html index.html
 
       - name: GitHub Pages konfigurieren
