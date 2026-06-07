@@ -28,11 +28,13 @@ jobs:
 
       - name: Datei mit StatiCrypt verschlüsseln
         run: |
-          # Installiert StatiCrypt im Runner
           npm install -g staticrypt
           
-          # Verschlüsselt die Datei und zwingt StatiCrypt, sie im selben Verzeichnis zu ersetzen
-          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein." --short -o index.html
+          # Erzeugt die verschlüsselte Datei im Ordner "encrypted"
+          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein." --short
+          
+          # Holt die verschlüsselte Datei heraus und überschreibt das Original ganz sicher
+          mv encrypted/index.html ./index.html
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
@@ -40,7 +42,6 @@ jobs:
       - name: Dateien verpacken
         uses: actions/upload-pages-artifact@v3
         with:
-          # Wir übergeben exakt die Datei, die gerade überschrieben wurde
           path: '.'
 
       - name: Direkt zu GitHub Pages hochladen
