@@ -28,13 +28,18 @@ jobs:
 
       - name: Datei mit StatiCrypt verschlüsseln
         run: |
+          # Installiert das originale StatiCrypt Paket
           npm install -g staticrypt
           
-          # Erzeugt die verschlüsselte Datei im Ordner "encrypted"
-          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein." --short
+          # Verschlüsselt die index.html in den Standard-Unterordner "encrypted"
+          # Ohne den fehlerhaften "--short" Befehl
+          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein."
           
-          # Holt die verschlüsselte Datei heraus und überschreibt das Original ganz sicher
+          # Verschiebt die fertige, geschützte HTML-Datei in das Hauptverzeichnis
           mv encrypted/index.html ./index.html
+          
+          # Löscht den überflüssigen, leeren Ordner
+          rm -rf encrypted
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
