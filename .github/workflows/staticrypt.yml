@@ -21,15 +21,19 @@ jobs:
       - name: Code auschecken
         uses: actions/checkout@v4
 
-      - name: Altes Verzeichnis bereinigen
-        run: rm -rf encrypted
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Mit StatiCrypt verschlüsseln
+      - name: Datei mit StatiCrypt verschlüsseln
         run: |
-          npx staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" \
-            -t "Geschützter Bereich" \
-            -i "Bitte gib dein Passwort ein." \
-            --non-interactive
+          # Installiert StatiCrypt lokal im Runner-Projektordner
+          npm install staticrypt
+          
+          # Führt StatiCrypt lokal aus und erstellt den Ordner "encrypted"
+          # -y bestätigt alle terminalinternen Abfragen automatisch
+          npx staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein." -y
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
@@ -37,6 +41,7 @@ jobs:
       - name: Dateien verpacken
         uses: actions/upload-pages-artifact@v3
         with:
+          # Wir übergeben exakt den von StatiCrypt erstellten Ordner
           path: './encrypted'
 
       - name: Direkt zu GitHub Pages hochladen
