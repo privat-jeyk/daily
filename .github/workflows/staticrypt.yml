@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -21,13 +21,21 @@ jobs:
       - name: Code auschecken
         uses: actions/checkout@v4
 
-      - name: StatiCrypt ausführen
-        uses: jirutka/setup-staticrypt-action@v1
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
         with:
-          password: ${{ secrets.STATICRYPT_PASSWORD }}
-          title: "Geschützter Bereich"
-          instructions: "Bitte gib dein Passwort ein."
-          output: "index.html"
+          node-version: '20'
+
+      - name: Datei mit StatiCrypt verschlüsseln
+        run: |
+          # Installiert das originale StatiCrypt-Paket
+          npm install -g staticrypt
+          
+          # Erstellt eine perfekt verschlüsselte 'encrypted.html' im Hintergrund
+          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein." --short
+          
+          # Ersetzt deine unverschlüsselte index.html mit der passwortgeschützten Version
+          mv encrypted.html index.html
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
