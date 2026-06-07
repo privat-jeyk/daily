@@ -21,11 +21,15 @@ jobs:
       - name: Code auschecken
         uses: actions/checkout@v4
 
+      - name: Altes Verzeichnis bereinigen
+        run: rm -rf encrypted
+
       - name: Mit StatiCrypt verschlüsseln
         run: |
-          # Führt StatiCrypt direkt aus, erstellt 'encrypted/index.html'
-          # und unterdrückt alle interaktiven Fragen
-          npx staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein."
+          npx staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" \
+            -t "Geschützter Bereich" \
+            -i "Bitte gib dein Passwort ein." \
+            --non-interactive
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
@@ -33,7 +37,6 @@ jobs:
       - name: Dateien verpacken
         uses: actions/upload-pages-artifact@v3
         with:
-          # Wir übergeben exakt den Ordner, den StatiCrypt standardmäßig erstellt
           path: './encrypted'
 
       - name: Direkt zu GitHub Pages hochladen
