@@ -1,0 +1,2 @@
+# daily
+Mein Wochenplaner
