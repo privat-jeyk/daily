@@ -1,0 +1,29 @@
+name: Verschlüssele und veröffentliche Seite
+
+on:
+  push:
+    branches:
+      - main  # Oder 'master', je nachdem wie dein Haupt-Branch heißt
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-node-version: '20'
+
+      - name: StatiCrypt installieren und ausführen
+        run: |
+          npm install -g staticrypt
+          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -o index.html
+
+      - name: Verschlüsselte Seite zu GitHub Pages hochladen
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: . # Lädt die frisch verschlüsselte index.html hoch
+          branch: gh-pages # Erstellt einen separaten, versteckten Branch für die Webseite
