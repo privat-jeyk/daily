@@ -3,7 +3,16 @@ name: Verschlüssele und veröffentliche Seite
 on:
   push:
     branches:
-      - main  # Oder 'master', je nachdem wie dein Haupt-Branch heißt
+      - main  # Falls dein Haupt-Branch 'master' heißt, hier master eintragen
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -15,15 +24,20 @@ jobs:
       - name: Node.js einrichten
         uses: actions/setup-node@v4
         with:
-          node-node-version: '20'
+          node-version: '20'
 
       - name: StatiCrypt installieren und ausführen
         run: |
           npm install -g staticrypt
           staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -o index.html
 
-      - name: Verschlüsselte Seite zu GitHub Pages hochladen
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: GitHub Pages konfigurieren
+        uses: actions/configure-pages@v5
+
+      - name: Dateien für den Upload verpacken
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: . # Lädt die frisch verschlüsselte index.html hoch
-          branch: gh-pages # Erstellt einen separaten, versteckten Branch für die Webseite
+          path: '.' # Verpackt die frisch verschlüsselte index.html
+
+      - name: Direkt zu GitHub Pages hochladen
+        uses: actions/deploy-pages@v4
