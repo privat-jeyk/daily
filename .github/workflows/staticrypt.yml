@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -21,56 +21,13 @@ jobs:
       - name: Code auschecken
         uses: actions/checkout@v4
 
-      - name: Passwortschutz absolut sicher einbauen
-        run: |
-          PASSWORD="${{ secrets.STATICRYPT_PASSWORD }}"
-          PASSWORD_HASH=$(echo -n "$PASSWORD" | sha256sum | cut -d' ' -f1)
-
-          # Erstellt ein separates Skript, das die Sperre über die Seite legt
-          cat << EOF > bouncer.js
-          (function() {
-            // Versteckt sofort den gesamten Inhalt der Seite, damit niemand spicken kann
-            const style = document.createElement('style');
-            style.innerHTML = 'html { display: none !important; }';
-            document.head.appendChild(style);
-
-            document.addEventListener("DOMContentLoaded", function() {
-              // Erstellt die dunkle Passwort-Eingabemaske
-              const overlay = document.createElement('div');
-              overlay.id = 'crypto-lock-overlay';
-              overlay.style = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:#1e1e24; color:#fff; font-family:sans-serif; display:flex; justify-content:center; align-items:center; z-index:9999999;';
-              overlay.innerHTML = '<div style="background:#2a2a35; padding:30px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.3); text-align:center;"><h3>Gesperrtes Repository</h3><input type="password" id="crypto-pw-input" placeholder="Passwort eingeben" style="padding:10px; border:none; border-radius:4px; margin-top:10px; width:80%;"><br><button id="crypto-unlock-btn" style="padding:10px 20px; border:none; background:#007acc; color:white; border-radius:4px; cursor:pointer; margin-top:10px;">Entsperren</button></div>';
-              
-              // Blendet die Seite für die Passworteingabe wieder ein, aber überdeckt sie mit der Maske
-              style.remove();
-              document.body.appendChild(overlay);
-
-              async function checkCryptoLock() {
-                const input = document.getElementById('crypto-pw-input').value;
-                const encoder = new TextEncoder();
-                const data = encoder.encode(input);
-                const buffer = await crypto.subtle.digest('SHA-256', data);
-                const hashArray = Array.from(new Uint8Array(buffer));
-                const inputHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                
-                if (inputHash === "${PASSWORD_HASH}") {
-                  overlay.remove();
-                } else {
-                  alert('Falsches Passwort!');
-                }
-              }
-
-              document.getElementById('crypto-unlock-btn').addEventListener('click', checkCryptoLock);
-              document.getElementById('crypto-pw-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkCryptoLock();
-              });
-            });
-          })();
-          EOF
-
-          # Fügt das Schutz-Skript als allererste Zeile in deine index.html ein
-          echo "<script>$(cat bouncer.js)</script>$(cat index.html)" > index.html
-          rm bouncer.js
+      - name: StatiCrypt ausführen
+        uses: jirutka/setup-staticrypt-action@v1
+        with:
+          password: ${{ secrets.STATICRYPT_PASSWORD }}
+          title: "Geschützter Bereich"
+          instructions: "Bitte gib dein Passwort ein."
+          output: "index.html"
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
