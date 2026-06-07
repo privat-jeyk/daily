@@ -3,7 +3,7 @@ name: Verschlüssele und veröffentliche Seite
 on:
   push:
     branches:
-      - main  # Falls dein Haupt-Branch 'master' heißt, hier master eintragen
+      - main
 
 permissions:
   contents: write
@@ -26,9 +26,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: StatiCrypt ausführen und index.html überschreiben
+      - name: StatiCrypt ausführen
         run: |
-          npx staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" --short -o index.html
+          npm install -g staticrypt
+          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" --short -o index.html
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
