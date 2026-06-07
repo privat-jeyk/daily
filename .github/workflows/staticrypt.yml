@@ -24,72 +24,41 @@ jobs:
       - name: Passwortschutz einbauen
         run: |
           PASSWORD="${{ secrets.STATICRYPT_PASSWORD }}"
-          
-          cat << 'EOF' > encrypted_index.html
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Geschützter Bereich</title>
-            <style>
-              body { background: #1e1e24; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-              .box { background: #2a2a35; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: center; }
-              input { padding: 10px; border: none; border-radius: 4px; margin-top: 10px; width: 80%; }
-              button { padding: 10px 20px; border: none; background: #007acc; color: white; border-radius: 4px; cursor: pointer; margin-top: 10px; }
-            </style>
-          </head>
-          <body>
-            <div class="box">
+          PASSWORD_HASH=$(echo -n "$PASSWORD" | sha256sum | cut -d' ' -f1)
+
+          # Erstellt das Passwort-Eingabefeld als CSS-Overlay
+          cat << EOF > overlay.html
+          <div id="crypto-lock-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#1e1e24; color:#fff; font-family:sans-serif; display:flex; justify-content:center; align-items:center; z-index:999999;">
+            <div style="background:#2a2a35; padding:30px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.3); text-align:center;">
               <h3>Gesperrtes Repository</h3>
-              <input type="password" id="pw" placeholder="Passwort eingeben">
+              <input type="password" id="crypto-pw-input" placeholder="Passwort eingeben" style="padding:10px; border:none; border-radius:4px; margin-top:10px; width:80%;">
               <br>
-              <button onclick="check()">Entsperren</button>
+              <button onclick="checkCryptoLock()" style="padding:10px 20px; border:none; background:#007acc; color:white; border-radius:4px; cursor:pointer; margin-top:10px;">Entsperren</button>
             </div>
+          </div>
 
-            <script>
-              const hash = "SECRET_HASH_PLACEHOLDER";
+          <script>
+            async function checkCryptoLock() {
+              const input = document.getElementById('crypto-pw-input').value;
+              const encoder = new TextEncoder();
+              const data = encoder.encode(input);
+              const buffer = await crypto.subtle.digest('SHA-256', data);
+              const hashArray = Array.from(new Uint8Array(buffer));
+              const inputHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
               
-              async function check() {
-                const input = document.getElementById('pw').value;
-                const encoder = new TextEncoder();
-                const data = encoder.encode(input);
-                const buffer = await crypto.subtle.digest('SHA-256', data);
-                const hashArray = Array.from(new Uint8Array(buffer));
-                const inputHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                
-                if (inputHash === hash) {
-                  // Dekodiert den Base64-String korrekt mit UTF-8 für Emojis und Umlaute
-                  const binaryString = atob(sessionStorage.getItem('page_data'));
-                  const bytes = new Uint8Array(binaryString.length);
-                  for (let i = 0; i < binaryString.length; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                  }
-                  const decodedText = new TextDecoder('utf-8').decode(bytes);
-                  
-                  document.open();
-                  document.write(decodedText);
-                  document.close();
-                } else {
-                  alert('Falsches Passwort!');
-                }
+              if (inputHash === "${PASSWORD_HASH}") {
+                document.getElementById('crypto-lock-overlay').remove();
+              } else {
+                alert('Falsches Passwort!');
               }
-
-              const rawData = `ORIGINAL_DATA_PLACEHOLDER`;
-              sessionStorage.setItem('page_data', rawData);
-            </script>
-          </body>
-          </html>
+            }
+          </script>
           EOF
 
-          PASSWORD_HASH=$(echo -n "$PASSWORD" | sha256sum | cut -d' ' -f1)
-          sed -i "s/SECRET_HASH_PLACEHOLDER/$PASSWORD_HASH/g" encrypted_index.html
+          # Fügt die Sperre direkt hinter das <body>-Tag deiner originalen Datei ein
+          sed -i '/<body[^>]*>/r overlay.html' index.html
 
-          # Konvertiert die Datei absolut sauber in Base64
-          ORIGINAL_BASE64=$(base64 -w 0 index.html)
-          sed -i "s|ORIGINAL_DATA_PLACEHOLDER|$ORIGINAL_BASE64|g" encrypted_index.html
-
-          mv encrypted_index.html index.html
+          rm overlay.html
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
