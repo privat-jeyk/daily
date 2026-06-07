@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -21,18 +21,14 @@ jobs:
       - name: Code auschecken
         uses: actions/checkout@v4
 
-      - name: Node.js einrichten
-        uses: actions/setup-node@v4
+      - name: Passwortschutz einbauen (Offizielles Plugin)
+        uses: diia-open-source/statiCrypt-action@v1.1.0
         with:
-          node-version: '20'
-
-      - name: Datei mit StatiCrypt verschlüsseln
-        run: |
-          # Installiert StatiCrypt im Runner
-          npm install staticrypt
-          
-          # Führt StatiCrypt ohne interaktive Abfragen aus
-          npx staticrypt index.html --passphrase "${{ secrets.STATICRYPT_PASSWORD }}" -t "Geschützter Bereich" -i "Bitte gib dein Passwort ein."
+          input: "index.html"
+          password: "${{ secrets.STATICRYPT_PASSWORD }}"
+          title: "Geschützter Bereich"
+          instructions: "Bitte gib dein Passwort ein."
+          output: "index.html" # Überschreibt das Original direkt für den Upload
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
@@ -40,8 +36,7 @@ jobs:
       - name: Dateien verpacken
         uses: actions/upload-pages-artifact@v3
         with:
-          # Lädt den von StatiCrypt erstellten Ordner hoch
-          path: './encrypted'
+          path: '.'
 
       - name: Direkt zu GitHub Pages hochladen
         uses: actions/deploy-pages@v4
