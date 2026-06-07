@@ -26,10 +26,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: StatiCrypt ausführen
+      - name: StatiCrypt installieren und Datei überschreiben
         run: |
           npm install -g staticrypt
-          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" --short -o index.html
+          staticrypt index.html "${{ secrets.STATICRYPT_PASSWORD }}" -o index.html
 
       - name: GitHub Pages konfigurieren
         uses: actions/configure-pages@v5
