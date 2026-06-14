@@ -8,7 +8,7 @@ var currentDay = date.getDay();
 var currentDate = date.getDate();
 var currentYear = date.getFullYear();
 
-console.log(currentMonth);
-console.log(currentDay);
-console.log(currentDate);
-console.log(currentYear);
+console.log(currentMonth); // current month - 1
+console.log(currentDay); // day of the week
+console.log(currentDate); // current date/number
+console.log(currentYear); // current year
