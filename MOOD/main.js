@@ -57,3 +57,7 @@ var totalDays = document.getElementById("totalDays");
 var dayCount = 0;
 var rowCount = 0;
 var days = document.getElementsByClassName("days");
+
+for(var i=0; i < days.length; i++ ){
+    var day = days[rowCount].getElementsByClassName("day");
+}
