@@ -46,3 +46,9 @@ habitTitle.onclick = function () {
     }
 }
 
+// SET THE TOTAL DAYS
+var daysInTheMonthList = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var daysInThisMonth = daysInTheMonthList[currentMonth];
+
+var daysCompleted = 0;
+var totalDays = document.getElementById("totalDays");
