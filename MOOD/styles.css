@@ -1,9 +1,12 @@
+* {
+    color: black;
+}
+
 body {
     background-size: 500px;
     background-color: darkblue;
     background-blend-mode: lighten;
     text-align: center;
-    color: #ffdc7c;
 }
 
 #title {
