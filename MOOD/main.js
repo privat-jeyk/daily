@@ -52,3 +52,8 @@ var daysInThisMonth = daysInTheMonthList[currentMonth];
 
 var daysCompleted = 0;
 var totalDays = document.getElementById("totalDays");
+
+// SETUP THE CALENDAR DAYS
+var dayCount = 0;
+var rowCount = 0;
+var days = document.getElementsByClassName("days");
