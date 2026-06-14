@@ -14,7 +14,7 @@ console.log(currentDate); // current date/number
 console.log(currentYear); // current year
 
 // IMPORTANT DATE INFO
-var month = [
+var months = [
     "Januar",
     "Februar",
     "März",
