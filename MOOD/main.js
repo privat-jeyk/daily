@@ -60,4 +60,9 @@ var days = document.getElementsByClassName("days");
 
 for(var i=0; i < days.length; i++ ){
     var day = days[rowCount].getElementsByClassName("day");
+    for ( var j=0; j < day.length; j++){
+        if(dayCount == currentDate -1){
+            day[j].setAttribute("style","border:2px solid black");
+        }
+    }
 }
