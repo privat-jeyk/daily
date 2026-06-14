@@ -41,5 +41,7 @@ habitTitle.onclick = function () {
     let habits = prompt("Wie ist deine Routine heute", habitTitle.innerHTML);
     if(habits.length == 0 ) {
         habitTitle.innerHTML = "Klicken um die Routine festzulegen";
+    } else {
+        habitTitle.innerHTML = habits;
     }
 }
