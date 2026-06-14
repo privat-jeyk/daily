@@ -45,3 +45,4 @@ habitTitle.onclick = function () {
         habitTitle.innerHTML = habits;
     }
 }
+
