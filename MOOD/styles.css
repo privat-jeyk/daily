@@ -1,6 +1,6 @@
 body {
     background-size: 500px;
-    background-color: darkblue;
+    /* background-color: darkblue; */
     background-blend-mode: lighten;
     text-align: center;
 }
