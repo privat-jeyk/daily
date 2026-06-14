@@ -31,4 +31,4 @@ var months = [
 
 // SET THE CORRECT MONTH
 var title = document.getElementById("title");
-title.innerHTML = months[currentMonth];
+title.innerHTML = "🌸" + months[currentMonth] + "🌸";
