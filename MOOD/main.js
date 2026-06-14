@@ -12,3 +12,23 @@ console.log(currentMonth); // current month - 1
 console.log(currentDay); // day of the week
 console.log(currentDate); // current date/number
 console.log(currentYear); // current year
+
+// IMPORTANT DATE INFO
+var month = [
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember",
+];
+
+// SET THE CORRECT MONTH
+var title = document.getElementById("title");
+title.innerHTML = months[currentMonth];
