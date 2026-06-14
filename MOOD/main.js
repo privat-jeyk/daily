@@ -32,3 +32,14 @@ var months = [
 // SET THE CORRECT MONTH
 var title = document.getElementById("title");
 title.innerHTML = "🌸" + months[currentMonth] + "🌸";
+
+// UPDATE THE CALENDAR INFO
+
+var habitTitle = document.getElementById("habitTitle");
+habitTitle.onclick = function () {
+
+    let habits = prompt("Wie ist deine Routine heute", habitTitle.innerHTML);
+    if(habits.length == 0 ) {
+        habitTitle.innerHTML = "Klicken um die Routine festzulegen";
+    }
+}
