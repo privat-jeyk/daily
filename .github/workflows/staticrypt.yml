@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+# Temporärer Fix, falls doch noch eine ältere Action Node 20 verlangt
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+
 permissions:
   contents: read
   pages: write
@@ -18,33 +22,36 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # Auf v4.2.2+ aktualisiert für Node 24 Support
       - name: Code auschecken
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Node.js einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20' # Das ist deine Projekt-Node-Version, das ist okay!
 
       - name: Webseite mit Passwort sperren
         run: |
-          # Führt den Schutz fehlerfrei ohne Terminal-Abfragen aus
           npx pagecrypt index.html index.html "${{ secrets.STATICRYPT_PASSWORD }}"
 
+      # Auf v6 aktualisiert
       - name: GitHub Pages konfigurieren
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
+      # Auf v5 aktualisiert
       - name: Dateien verpacken
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: '.'
 
+      # Auf v5 aktualisiert
       - name: Direkt zu GitHub Pages hochladen
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       - name: Sende Telegram Benachrichtigung
         uses: appleboy/telegram-action@master
-        if: always() # Sorgt dafür, dass die Nachricht bei Erfolg UND Fehler gesendet wird
+        if: always()
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
