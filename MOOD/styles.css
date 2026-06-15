@@ -1,10 +1,10 @@
 :root {
-    --main: #1A73E8;    /* Electric Cyan-Blau (Markenfarbe, Links) */
-    --side1: #FF6B00;   /* Neon Tangerine (Dein Haupt-CTA-Button!) */
-    --side2: #00E676;   /* Vivid Lime Green (Sekundäre Badges, Hover-Effekte) */
-    --side3: #0B132B;   /* Midnight Blue (Für dunkle Sektionen wie Hero/Footer) */
-    --border: #F4F6F9;  /* Cyber White (Als cleaner Karten-Hintergrund oder Trennlinie) */
-    --text: #1C1E21;    /* Ink Black (Sorgt für perfekte Lesbarkeit auf hellem Grund) */
+    --main: #1A73E8;    /* Electric Cyan-Blau */
+    --side1: #FF6B00;   /* Neon Tangerine */
+    --side2: #00E676;   /* Vivid Lime Green */
+    --side3: #0B132B;   /* Midnight Blue */
+    --border: #F4F6F9;  /* Cyber White */
+    --text: #1C1E21;    /* Ink Black */
 }
 
 body {
@@ -12,15 +12,17 @@ body {
     background-blend-mode: lighten;
     text-align: center;
     background-color: var(--main);
+    color: var(--border); /* Nutzt das helle Cyber-White als Textfarbe auf Blau */
+    font-family: sans-serif;
 }
 
 #title {
     margin-top: 100px;
-    line-height: 10px;
+    line-height: 1.2;
 }
 
 #subtitle {
-    opacity: 0.7;
+    opacity: 0.8;
     font-size: 18px;
     margin-bottom: 20px;
 }
@@ -31,8 +33,8 @@ body {
 }
 
 #calendarDiv {
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px 10px 20px 20px;
+    background-color: var(--border); /* Heller Hintergrund für das Kalenderfeld */
+    border-radius: 12px;
     margin: auto;
     align-content: center;
     text-align: center;
@@ -43,29 +45,40 @@ body {
     display: flex;
     justify-content: space-between;
     border-radius: 10px 10px 0px 0px;
-    border: 2px solid black;
-    padding: 0px 20px;
+    padding: 15px 20px;
     font-size: 20px;
-    background-color: pink;
-    line-height: 0px;
+    background-color: var(--side1); /* Knalliges Orange für die Kopfzeile */
+    color: var(--border); /* Heller Text auf dem orangenen Header */
+    align-items: center;
 }
 
 #calendarContent {
     padding: 20px;
-    border: 2px solid black;
 }
 
 .days {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .day {
     width: 30px;
-    margin: 3px;
+    margin: 4px;
     padding: 10px;
     font-size: 15px;
     text-align: center;
-    border-radius: 20px;
-    border: 2px solid black;
-    background-color: rgb(137, 246, 161);
+    border-radius: 8px;
+    border: none;
+    background-color: var(--side2); /* Grüner Hintergrund für die Tage */
+    color: var(--side3); /* Sehr dunkles Blau für perfekte Lesbarkeit auf Grün */
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+/* Moderner Interaktions-Effekt beim Überfliegen der Tage */
+.day:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: var(--side3); /* Invertiert die Farben beim Hovern */
+    color: var(--border);
 }
