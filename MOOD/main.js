@@ -74,4 +74,5 @@ for(var i=0; i < days.length; i++ ){
             day[j].setAttribute("style", "background-color: white");
         }
     }
+    rowCount++;
 }
