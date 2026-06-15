@@ -1,53 +1,70 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <base href="https://github.io">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentrierte Navigation</title>
+    <style>
+        /* Setzt die Seite auf die volle Höhe und zentriert den Inhalt */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+        }
 
-  <title>Wochenplan</title>
+        /* Container für die Buttons */
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Abstand zwischen den Buttons */
+            text-align: center;
+        }
 
-  <meta name="theme-color" content="#0f172a">
+        /* Styling für die Buttons */
+        .nav-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="css/style.css">
+        /* Effekt beim Drüberfahren mit der Maus */
+        .nav-btn:hover {
+            background-color: #0056b3;
+        }
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        /* Effekt beim Anklicken */
+        .nav-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
+    <div class="nav-container">
+        <h2>Wohin möchtest du gehen?</h2>
+        <!-- Buttons mit JavaScript-Funktion im 'onclick'-Attribut -->
+        <button class="nav-btn" onclick="navigiereZu('https://google.com')">Google öffnen</button>
+        <button class="nav-btn" onclick="navigiereZu('https://wikipedia.org')">Wikipedia öffnen</button>
+    </div>
 
-  <h1>📅 Wochenplan</h1>
-
-  <div class="date-range">
-    <input type="date" id="startDate">
-    <input type="date" id="endDate">
-  </div>
-
-  <div class="top-buttons">
-    <button id="addBtn">+ Aufgabe</button>
-    <button id="clearBtn">Reset</button>
-    <button id="shareBtn">Teilen</button>
-  </div>
-
-</header>
-
-<main>
-
-  <section id="planner" class="planner"></section>
-
-  <hr>
-
-  <div id="daySelect" class="day-select"></div>
-
-  <section id="templates" class="templates"></section>
-
-</main>
-
-<script src="js/app.js"></script>
+    <script>
+        // JavaScript-Funktion für die Weiterleitung
+        function navigiereZu(zielUrl) {
+            window.location.href = zielUrl;
+        }
+    </script>
 
 </body>
 </html>
