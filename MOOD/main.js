@@ -62,7 +62,7 @@ for(var i=0; i < days.length; i++ ){
     for ( var j=0; j < day.length; j++){
         if(dayCount == currentDate -1){
             day[j].setAttribute("style","color: var(--side2)");
-            day[j].setAttribute("style","border:2px solid var(--text)");
+            day[j].setAttribute("style","border:2px solid black");
         }
 
         if (daycount < daysInThisMonth) {
@@ -71,7 +71,7 @@ for(var i=0; i < days.length; i++ ){
             dayCount++;
         } else {
             day[j].innerHTML = "";
-            day[j].setAttribute("style", "background-color: var(--border)");
+            day[j].setAttribute("style", "background-color: white");
         }
     }
 }
