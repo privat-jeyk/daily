@@ -76,3 +76,5 @@ for(var i=0; i < days.length; i++ ){
     }
     rowCount++;
 }
+
+//7:30 Minuten
