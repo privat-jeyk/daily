@@ -78,3 +78,4 @@ for(var i=0; i < days.length; i++ ){
 }
 
 //12:00 Minuten
+//Jippie der bot geht
