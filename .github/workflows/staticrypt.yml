@@ -41,3 +41,15 @@ jobs:
 
       - name: Direkt zu GitHub Pages hochladen
         uses: actions/deploy-pages@v4
+
+      - name: Sende Telegram Benachrichtigung
+        uses: appleboy/telegram-action@master
+        if: always() # Sorgt dafür, dass die Nachricht bei Erfolg UND Fehler gesendet wird
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.event.head_commit.message }}
+            Status: ${{ job.status == 'success' && '✅ ERFOLGREICH' || '❌ FEHLGESCHLAGEN' }}
+            Link: https://github.com{{ github.repository }}/actions/runs/${{ github.run_id }}
