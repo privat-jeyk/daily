@@ -7,10 +7,10 @@ var currentDay = date.getDay();
 var currentDate = date.getDate();
 var currentYear = date.getFullYear();
 
-console.log(currentMonth); // current month - 1
-console.log(currentDay); // day of the week
-console.log(currentDate); // current date/number
-console.log(currentYear); // current year
+// console.log(currentMonth); // current month - 1
+// console.log(currentDay); // day of the week
+// console.log(currentDate); // current date/number
+// console.log(currentYear); // current year
 
 // IMPORTANT DATE INFO
 var months = [
