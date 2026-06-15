@@ -1,12 +1,3 @@
-/* :root {
-    --main: #1A73E8;
-    --side1: ;
-    --side2: ;
-    --side3: ;
-    --border: ;
-    --text: ;
-} */
-
 :root {
     --main: #1A73E8;    /* Electric Cyan-Blau (Markenfarbe, Links) */
     --side1: #FF6B00;   /* Neon Tangerine (Dein Haupt-CTA-Button!) */
@@ -20,7 +11,7 @@ body {
     background-size: 500px;
     background-blend-mode: lighten;
     text-align: center;
-    background-color: var(main);
+    background-color: var(--main);
 }
 
 #title {
