@@ -65,7 +65,7 @@ for(var i=0; i < days.length; i++ ){
             day[j].setAttribute("style","border:2px solid black");
         }
 
-        if (daycount < daysInThisMonth) {
+        if (dayCount < daysInThisMonth) {
             day[j].innerHTML = dayCount + 1;
             day[j].setAttribute("id", "day" + (dayCount + 1));
             dayCount++;
