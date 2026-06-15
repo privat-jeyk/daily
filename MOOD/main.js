@@ -64,5 +64,14 @@ for(var i=0; i < days.length; i++ ){
             day[j].setAttribute("style","color: var(--side2)");
             day[j].setAttribute("style","border:2px solid var(--text)");
         }
+
+        if (daycount < daysInThisMonth) {
+            day[j].innerHTML = dayCount + 1;
+            day[j].setAttribute("id", "day" + (dayCount + 1));
+            dayCount++;
+        } else {
+            day[j].innerHTML = "";
+            day[j].setAttribute("style", "background-color: var(--border)");
+        }
     }
 }
