@@ -1,7 +1,26 @@
+/* :root {
+    --main: #1A73E8;
+    --side1: ;
+    --side2: ;
+    --side3: ;
+    --border: ;
+    --text: ;
+} */
+
+:root {
+    --main: #1A73E8;    /* Electric Cyan-Blau (Markenfarbe, Links) */
+    --side1: #FF6B00;   /* Neon Tangerine (Dein Haupt-CTA-Button!) */
+    --side2: #00E676;   /* Vivid Lime Green (Sekundäre Badges, Hover-Effekte) */
+    --side3: #0B132B;   /* Midnight Blue (Für dunkle Sektionen wie Hero/Footer) */
+    --border: #F4F6F9;  /* Cyber White (Als cleaner Karten-Hintergrund oder Trennlinie) */
+    --text: #1C1E21;    /* Ink Black (Sorgt für perfekte Lesbarkeit auf hellem Grund) */
+}
+
 body {
     background-size: 500px;
     background-blend-mode: lighten;
     text-align: center;
+    background-color: var(main);
 }
 
 #title {

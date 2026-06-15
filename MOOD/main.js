@@ -66,3 +66,6 @@ for(var i=0; i < days.length; i++ ){
         }
     }
 }
+
+// 7:12 Minuten
+// https://youtu.be/ur4X0IyBsnQ?si=8if26fbeZO660iZl
