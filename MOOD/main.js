@@ -62,7 +62,7 @@ for(var i=0; i < days.length; i++ ){
     for ( var j=0; j < day.length; j++){
         if(dayCount == currentDate -1){
             day[j].setAttribute("style","color:rgb(234, 1, 144");
-            day[j].setAttribute("style","border:2px solid black");
+            day[j].setAttribute("style","border:2px solid var(--text)");
         }
     }
 }
