@@ -76,3 +76,19 @@ for(var i=0; i < days.length; i++ ){
     }
     rowCount++;
 }
+
+// INITIALIZE COMPLETED ARRAY
+    var completed = new Array(31);
+    for (var i = 0; i < dayCount; i++) {
+        var tempString = 
+        "" + (currentMonth + 1) + "-" + (i + 1) + "-" + currentYear;
+        console.log("Gespeichertes Datum: " + tempString);
+        var tempDay = localStorage.getItem(tempString);
+        console.log(tempDay);
+        if(tempDay == null || tempDay == "false"){
+            localStorage.setItem(tempString, "false");
+        } else if (tempDay == "true") {
+            daysCompleted++;
+        }
+        totalDays.innerHTML = daysCompleted + "/" + daysInThisMonth;                                                                         
+    }
