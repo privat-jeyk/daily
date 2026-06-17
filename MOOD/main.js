@@ -92,3 +92,6 @@ for(var i=0; i < days.length; i++ ){
         }
         totalDays.innerHTML = daysCompleted + "/" + daysInThisMonth;                                                                         
     }
+
+    console.log("completed array:" + completed);
+    console.log("total days completed: " + daysCompleted);
