@@ -2,30 +2,17 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Zentrierte Navigation</title>
-                <style>
-                        /* Setzt die Seite auf die volle Höhe und zentriert den Inhalt */
-                                body {
-                                            margin: 0;
-                                                        padding: 0;
-                                                                    height: 100vh;
-                                                                                display: flex;
-                                                                                            justify-content: center;
-                                                                                                        align-items: center;
-                                                                                                                    background-color: #f0f2f5;
-                                                                                                                          …it JavaScript-Funktion im 'onclick'-Attribut -->
-                                                                                                                                  <button class="nav-btn" onclick="navigiereZu('https://privat-jeyk.github.io/daily/DAILY/')">Tagesplaner</button>
-                                                                                                                                          <button class="nav-btn" onclick="navigiereZu('https://privat-jeyk.github.io/daily/MOOD/')">Stimmungsbarometer</button>
-                                                                                                                                              </div>
-
-                                                                                                                                                  <script>
-                                                                                                                                                          // JavaScript-Funktion für die Weiterleitung
-                                                                                                                                                                  function navigiereZu(zielUrl) {
-                                                                                                                                                                              window.location.href = zielUrl;
-                                                                                                                                                                                      }
-                                                                                                                                                                                          </script>
-
-                                                                                                                                                                                          </body>
-                                                                                                                                                                                          </html>
-                                                                                                                                                                                          
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match-3 Web Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Match-3 Puzzle</h1>
+        <div class="score-board">Punkte: <span id="score">0</span></div>
+        <div id="grid" class="grid"></div>
+        <button id="reset-btn">Neues Spiel</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
