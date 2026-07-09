@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zentrierte Navigation</title>
+    <title>Zentrierte Navigation mit Reload</title>
     <style>
         /* Setzt die Seite auf die volle Höhe und zentriert den Inhalt */
         body {
@@ -15,9 +15,34 @@
             align-items: center;
             background-color: #f0f2f5;
             font-family: Arial, sans-serif;
+            position: relative; /* Wichtig für die Positionierung des Reload-Buttons */
         }
 
-        /* Container für die Buttons */
+        /* Reload-Button oben rechts */
+        .reload-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .reload-btn:hover {
+            background-color: #d0d0d0;
+        }
+
+        .reload-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Container für die Buttons in der Mitte */
         .nav-container {
             display: flex;
             flex-direction: column;
@@ -52,17 +77,26 @@
 </head>
 <body>
 
+    <!-- Neuer Reload-Button oben rechts -->
+    <button class="reload-btn" onclick="seiteNeuLaden()">🔄 Neu laden</button>
+
+    <!-- Zentrierte Navigation -->
     <div class="nav-container">
         <h2>Wohin möchtest du gehen?</h2>
-        <!-- Buttons mit JavaScript-Funktion im 'onclick'-Attribut -->
-        <button class="nav-btn" onclick="navigiereZu('')">Mood öffnen</button>
-        <button class="nav-btn" onclick="navigiereZu('https://privat-jeyk.github.io/daily/CRACY/')">Spiel öffnen</button>
+        <button class="nav-btn" onclick="navigiereZu('https://privat-jeyk.github.io/daily/CRACY/')">CRACY</button>
+        <button class="nav-btn" onclick="navigiereZu('https://wikipedia.org')">Wikipedia öffnen</button>
     </div>
 
     <script>
         // JavaScript-Funktion für die Weiterleitung
         function navigiereZu(zielUrl) {
             window.location.href = zielUrl;
+        }
+
+        // JavaScript-Funktion zum Neuladen vom Server
+        function seiteNeuLaden() {
+            // true erzwingt das Neuladen vom Server (umgeht den Browser-Cache)
+            window.location.reload(true);
         }
     </script>
 
