@@ -1,321 +1,135 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein Digitales Tagebuch</title>
-    <style>
-        :root {
-            --primary: #4a90e2;
-            --primary-hover: #357abd;
-            --bg: #f5f7fa;
-            --card-bg: #ffffff;
-            --text: #333333;
-            --text-light: #666666;
-            --border: #dddddd;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --star-active: #ffca28;
-            --star-dim: #e0e0e0;
-        }
+// DOM Elemente referenzieren
+const diaryForm = document.getElementById('diaryForm');
+const diaryDate = document.getElementById('diaryDate');
+const diaryComment = document.getElementById('diaryComment');
+const entriesContainer = document.getElementById('entriesContainer');
+const exportJsonBtn = document.getElementById('exportJson');
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+// Sichere Funktion zum Ermitteln des heutigen Datums im Format YYYY-MM-DD
+function getTodayString() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            padding: 20px;
-        }
+// Setzen des heutigen Datums beim Start
+diaryDate.value = getTodayString();
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+// Speicher-Array (Laden aus LocalStorage oder leeres Array erzeugen)
+let diaryEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+// Funktion: Listeneinträge rendern
+function renderEntries() {
+    entriesContainer.innerHTML = '';
 
-        header h1 {
-            color: var(--primary);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+    if (diaryEntries.length === 0) {
+        entriesContainer.innerHTML = '<p class="no-entries">Noch keine Einträge vorhanden.</p>';
+        return;
+    }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px var(--shadow);
-        }
+    // Sortiert die Einträge chronologisch (neueste oben)
+    const sortedEntries = [...diaryEntries].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    sortedEntries.forEach((entry) => {
+        const entryItem = document.createElement('div');
+        entryItem.className = 'entry-item';
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
+        // Erzeuge visuelle Stern-Anzeige
+        const stars = '★'.repeat(entry.mood) + '☆'.repeat(5 - entry.mood);
 
-        input[type="date"], textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 1rem;
-            background: #fafafa;
-            transition: border-color 0.3s;
-        }
+        // Datum für deutsche Anzeige schön formatieren
+        const formattedDate = new Date(entry.date).toLocaleDateString('de-DE', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
 
-        input[type="date"]:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #fff;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* Interaktive Rating Bar (Sterne) von rechts nach links für reines CSS-Matching */
-        .rating-bar {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-            gap: 5px;
-        }
-
-        .rating-bar input {
-            display: none;
-        }
-
-        .rating-bar label {
-            font-size: 2rem;
-            color: var(--star-dim);
-            cursor: pointer;
-            transition: color 0.2s;
-            margin-bottom: 0;
-        }
-
-        .rating-bar label:hover,
-        .rating-bar label:hover ~ label,
-        .rating-bar input:checked ~ label {
-            color: var(--star-active);
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-        }
-
-        .btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .btn-export {
-            background: #2ec4b6;
-        }
-        .btn-export:hover {
-            background: #239a8f;
-        }
-
-        .actions {
-            margin-bottom: 25px;
-        }
-
-        /* Tagebuch-Liste Style */
-        .entry-list h2 {
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 5px;
-        }
-
-        .entry-item {
-            background: var(--card-bg);
-            border-left: 5px solid var(--primary);
-            padding: 15px 20px;
-            border-radius: 0 8px 8px 0;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px var(--shadow);
-            position: relative;
-        }
-
-        .entry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .entry-date {
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .entry-stars {
-            color: var(--star-active);
-            font-size: 1.2rem;
-        }
-
-        .entry-text {
-            white-space: pre-wrap;
-            color: var(--text-light);
-        }
-
-        .delete-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #ff4d4d;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: none;
-        }
-
-        .entry-item:hover .delete-btn {
-            display: block;
-        }
-
-        .no-entries {
-            text-align: center;
-            color: var(--text-light);
-            font-style: italic;
-            padding: 20px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <header>
-            <h1>Mein Tagebuch</h1>
-            <p>Halte deine täglichen Gedanken und Stimmungen fest</p>
-        </header>
-
-        <!-- Eingabe-Formular -->
-        <div class="card">
-            <form id="diaryForm">
-                <div class="form-group">
-                    <label for="diaryDate">Datum auswählen:</label>
-                    <input type="date" id="diaryDate" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Tagesstimmung (1 bis 5 Sterne):</label>
-                    <div class="rating-bar">
-                        <input type="radio" id="star5" name="mood" value="5" required><label for="star5">★</label>
-                        <input type="radio" id="star4" name="mood" value="4"><label for="star4">★</label>
-                        <input type="radio" id="star3" name="mood" value="3"><label for="star3">★</label>
-                        <input type="radio" id="star2" name="mood" value="2"><label for="star2">★</label>
-                        <input type="radio" id="star1" name="mood" value="1"><label for="star1">★</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="diaryComment">Kommentar / Gedanken des Tages:</label>
-                    <textarea id="diaryComment" placeholder="Wie war dein Tag? Was hast du erlebt..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn">Eintrag speichern</button>
-            </form>
-        </div>
-
-        <!-- Datei-Export Steuerbutton -->
-        <div class="actions">
-            <button id="exportJson" class="btn btn-export">Als JSON-Datei herunterladen</button>
-        </div>
-
-        <!-- Tagebuch-Einträge Liste -->
-        <div class="entry-list">
-            <h2>Deine Einträge</h2>
-            <div id="entriesContainer">
-                <!-- Einträge werden dynamisch per JavaScript eingefügt -->
+        entryItem.innerHTML = `
+            <div class="entry-header">
+                <span class="entry-date">${formattedDate}</span>
+                <span class="entry-stars">${stars}</span>
             </div>
-        </div>
-    </div>
+            <div class="entry-text">${escapeHtml(entry.comment)}</div>
+            <button class="delete-btn" onclick="deleteEntry('${entry.id}')">Eintrag löschen</button>
+        `;
 
-    <script>
-        // DOM Elemente referenzieren
-        const diaryForm = document.getElementById('diaryForm');
-        const diaryDate = document.getElementById('diaryDate');
-        const diaryComment = document.getElementById('diaryComment');
-        const entriesContainer = document.getElementById('entriesContainer');
-        const exportJsonBtn = document.getElementById('exportJson');
+        entriesContainer.appendChild(entryItem);
+    });
+}
 
-        // Automatisches Setzen des heutigen Datums beim Start
-        diaryDate.value = new Date().toISOString().split('T')[0];
+// Sicherheitsfunktion: Verhindert HTML-Injektionen in den Kommentaren (XSS Schutz)
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.innerText = text;
+    return div.innerHTML;
+}
 
-        // Speicher-Array (Laden aus LocalStorage oder leeres Array erzeugen)
-        let diaryEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
+// Event-Listener: Formular absenden & neuen Eintrag generieren
+diaryForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-        // Funktion: Listeneinträge rendern
-        function renderEntries() {
-            entriesContainer.innerHTML = '';
+    // Aktuell gewählte Radio-Stimmung ermitteln
+    const checkedRadio = document.querySelector('input[name="mood"]:checked');
+    if (!checkedRadio) {
+        alert("Bitte wähle eine Tagesstimmung aus!");
+        return;
+    }
+    const selectedMood = checkedRadio.value;
 
-            if (diaryEntries.length === 0) {
-                entriesContainer.innerHTML = '<p class="no-entries">Noch keine Einträge vorhanden.</p>';
-                return;
-            }
+    // JS-Objekt für JSON strukturieren
+    const newEntry = {
+        id: Date.now().toString(), // Einzigartiger Timestamp als ID
+        date: diaryDate.value,
+        mood: parseInt(selectedMood),
+        comment: diaryComment.value
+    };
 
-            // Sortiert die Einträge chronologisch (neueste oben)
-            const sortedEntries = [...diaryEntries].sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Daten lokal pushen & persistent speichern
+    diaryEntries.push(newEntry);
+    localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
 
-            sortedEntries.forEach((entry) => {
-                const entryItem = document.createElement('div');
-                entryItem.className = 'entry-item';
+    // Formularfelder zurücksetzen
+    diaryComment.value = '';
+    checkedRadio.checked = false;
+    diaryDate.value = getTodayString();
+    
+    renderEntries();
+});
 
-                // Erzeuge visuelle Stern-Anzeige
-                const stars = '★'.repeat(entry.mood) + '☆'.repeat(5 - entry.mood);
+// Funktion: Einzelnen Eintrag aus der Liste löschen
+window.deleteEntry = function(id) {
+    if(confirm('Möchtest du diesen Tagebucheintrag löschen?')) {
+        diaryEntries = diaryEntries.filter(entry => entry.id !== id);
+        localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
+        renderEntries();
+    }
+};
 
-                // Datum für deutsche Anzeige schön formatieren
-                const formattedDate = new Date(entry.date).toLocaleDateString('de-DE', {
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                });
+// Event-Listener: Array in ein echtes JSON-File umwandeln und herunterladen
+exportJsonBtn.addEventListener('click', () => {
+    if (diaryEntries.length === 0) {
+        alert('Es gibt noch keine Einträge zum Exportieren!');
+        return;
+    }
 
-                entryItem.innerHTML = `
-                    <div class="entry-header">
-                        <span class="entry-date">${formattedDate}</span>
-                        <span class="entry-stars">${stars}</span>
-                    </div>
-                    <div class="entry-text">${escapeHtml(entry.comment)}</div>
-                    <button class="delete-btn" onclick="deleteEntry('${entry.id}')">Eintrag löschen</button>
-                `;
+    // JSON-String generieren (strukturiert formatiert mit Einrückungen)
+    const jsonString = JSON.stringify(diaryEntries, null, 2);
+    
+    // Virtuellen Datei-Blob erstellen
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    // Temporären Download-Link erzeugen und triggern
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tagebuch_daten.json';
+    document.body.appendChild(a);
+    a.click();
+    
+    // Speicherbereinigung
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
 
-                entriesContainer.appendChild(entryItem);
-            });
-        }
-
-        // Sicherheitsfunktion: Verhindert HTML-Injektionen in den Kommentaren (XSS Schutz)
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.innerText = text;
-            return div.innerHTML;
-        }
-
-        // Event-Listener: Formular absenden & neuen Eintrag generieren
-        diaryForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Aktuell gewählte Radio-Stimmung ermitteln
-            const selectedMood = document.querySelector('input[name="mood"]:checked').value;
+// App-Start: Gespeicherte Daten initial auf den Schirm rendern
+renderEntries();
