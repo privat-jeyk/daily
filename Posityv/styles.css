@@ -1,14 +1,18 @@
 :root {
-    --primary: #4a90e2;
-    --primary-hover: #357abd;
-    --bg: #f5f7fa;
-    --card-bg: #ffffff;
-    --text: #333333;
-    --text-light: #666666;
-    --border: #dddddd;
-    --shadow: rgba(0, 0, 0, 0.1);
-    --star-active: #ffca28;
-    --star-dim: #e0e0e0;
+    --primary: #4A90E2;       /* Helles Blau – Hauptfarbe */
+    --primary-hover: #357ABD; /* Dunkleres Blau – Hover */
+    
+    --bg: #E6F0FA;            /* Eisblau – Seitenhintergrund */
+    --card-bg: #FFE3B3;       /* Creme-Orange – Karten/helle Flächen */
+    
+    --text: #2C2C2C;          /* Dunkles Grau – gut lesbarer Haupttext */
+    --text-light: #B56F1D;    /* Bernstein – sekundärer Text/Akzente */
+    
+    --border: #4A90E2;        /* Blau – Rahmen/Konturen */
+    --shadow: rgba(74, 144, 226, 0.25); /* Bläulicher Schatten */
+    
+    --star-active: #B56F1D;   /* Bernstein – aktive Sterne */
+    --star-dim: #B8D3F0;      /* Gedämpftes Eisblau – inaktive Sterne */
 }
 
 * {
