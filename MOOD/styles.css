@@ -1,12 +1,11 @@
 :root {
-    --main: #1A73E8;    /* Electric Cyan-Blau */
-    --side1: #FF6B00;   /* Neon Tangerine */
-    --side2: #00E676;   /* Vivid Lime Green */
-    --side3: #0B132B;   /* Midnight Blue */
-    --border: #F4F6F9;  /* Cyber White */
-    --text: #1C1E21;    /* Ink Black */
+    --main:   #4A90E2; /* Helles Blau – primäre Farbe, Konturen & Schatten */
+    --side1:  #B56F1D; /* Bernstein-Orange – Akzente & warme Schattierungen */
+    --side2:  #FFE3B3; /* Creme-Orange – Highlights & helle Akzente */
+    --side3:  #E6F0FA; /* Eisblau – Hintergrund & große helle Flächen */
+    --border: #4A90E2; /* Blau – Rahmen und Konturen */
+    --text:   #2C2C2C; /* Dunkles Grau – gut lesbarer Text */
 }
-
 body {
     background-size: 500px;
     background-blend-mode: lighten;
