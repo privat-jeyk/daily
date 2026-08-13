@@ -1,34 +1,34 @@
-const diaryForm = document.getElementById('diaryForm');
-const diaryDate = document.getElementById('diaryDate');
-const diaryComment = document.getElementById('diaryComment');
+// ===============================
+// DOM ELEMENTE
+// ===============================
 
-const entriesContainer =
-    document.getElementById('entriesContainer');
-
-const exportJsonBtn =
-    document.getElementById('exportJson');
-
-const importJsonBtn =
-    document.getElementById('importJsonBtn');
-
-const importJsonInput =
-    document.getElementById('importJsonInput');
-
-const hardReloadBtn =
-    document.getElementById('hardReloadBtn');
+const diaryForm = document.getElementById("diaryForm");
+const diaryDate = document.getElementById("diaryDate");
+const diaryComment = document.getElementById("diaryComment");
+const entriesContainer = document.getElementById("entriesContainer");
+const exportJsonBtn = document.getElementById("exportJson");
+const importJsonBtn = document.getElementById("importJsonBtn");
+const importJsonInput = document.getElementById("importJsonInput");
+const hardReloadBtn = document.getElementById("hardReloadBtn");
 
 
-const STORAGE_KEY = 'diaryEntries';
+// ===============================
+// LOCAL STORAGE
+// ===============================
+
+const STORAGE_KEY = "diaryEntries";
 
 
-/* HEUTIGES DATUM */
+// ===============================
+// HEUTIGES DATUM
+// ===============================
 
 function getTodayString() {
     const today = new Date();
 
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
 
     return ${year}-${month}-${day};
 }
@@ -36,22 +36,28 @@ function getTodayString() {
 diaryDate.value = getTodayString();
 
 
-/* EINTRÄGE LADEN */
+// ===============================
+// EINTRÄGE LADEN
+// ===============================
 
 function loadEntries() {
-    try {
-        const data = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(STORAGE_KEY);
 
-        if (!data) {
-            return [];
+    if (!saved) {
+        return [];
+    }
+
+    try {
+        const entries = JSON.parse(saved);
+
+        if (Array.isArray(entries)) {
+            return entries;
         }
 
-        const parsed = JSON.parse(data);
-
-        return Array.isArray(parsed) ? parsed : [];
+        return [];
 
     } catch (error) {
-        console.error('Fehler beim Laden:', error);
+        console.error("Fehler beim Laden der Einträge:", error);
         return [];
     }
 }
@@ -60,7 +66,9 @@ function loadEntries() {
 let diaryEntries = loadEntries();
 
 
-/* EINTRÄGE SPEICHERN */
+// ===============================
+// EINTRÄGE SPEICHERN
+// ===============================
 
 function saveEntries() {
     localStorage.setItem(
@@ -70,34 +78,40 @@ function saveEntries() {
 }
 
 
-/* HTML SICHER DARSTELLEN */
+// ===============================
+// HTML SICHER MACHEN
+// ===============================
 
 function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = String(text);
+    const div = document.createElement("div");
+    div.textContent = text;
     return div.innerHTML;
 }
 
 
-/* DATUM FORMATIEREN */
+// ===============================
+// DATUM FORMATIEREN
+// ===============================
 
 function formatDate(dateString) {
-    const date = new Date(dateString + 'T00:00:00');
+    const date = new Date(dateString + "T00:00:00");
 
-    return date.toLocaleDateString('de-DE', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+    return date.toLocaleDateString("de-DE", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
     });
 }
 
 
-/* EINTRÄGE ANZEIGEN */
+// ===============================
+// EINTRÄGE ANZEIGEN
+// ===============================
 
 function renderEntries() {
 
-    entriesContainer.innerHTML = '';
+    entriesContainer.innerHTML = "";
 
     if (diaryEntries.length === 0) {
 
@@ -111,42 +125,38 @@ function renderEntries() {
     }
 
 
-    const sortedEntries = [...diaryEntries].sort((a, b) => {
+    // Neueste Einträge zuerst
+    const sortedEntries = [...diaryEntries].sort(
+        (a, b) => {
 
-        const dateA = new Date(a.date + 'T00:00:00');
-        const dateB = new Date(b.date + 'T00:00:00');
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
 
-        if (dateA.getTime() === dateB.getTime()) {
-            return Number(b.id) - Number(a.id);
+            return dateB - dateA;
         }
-
-        return dateB - dateA;
-    });
+    );
 
 
     sortedEntries.forEach(entry => {
 
-        const entryItem = document.createElement('div');
+        const entryItem = document.createElement("div");
 
-        entryItem.className = 'entry-item';
+        entryItem.className = "entry-item";
 
 
-        const mood = Math.min(
-            5,
-            Math.max(1, Number(entry.mood))
-        );
-
+        const mood = Number(entry.mood);
 
         const stars =
-            '★'.repeat(mood) +
-            '☆'.repeat(5 - mood);
+            "★".repeat(mood) +
+            "☆".repeat(5 - mood);
 
 
         entryItem.innerHTML = `
+
             <div class="entry-header">
 
                 <span class="entry-date">
-                    ${escapeHtml(formatDate(entry.date))}
+                ${escapeHtml(formatDate(entry.date))}
                 </span>
 
                 <span class="entry-stars">
@@ -166,10 +176,10 @@ function renderEntries() {
 
 
         const deleteButton =
-            entryItem.querySelector('.delete-btn');
+            entryItem.querySelector(".delete-btn");
 
 
-        deleteButton.addEventListener('click', () => {
+        deleteButton.addEventListener("click", () => {
             deleteEntry(entry.id);
         });
 
@@ -179,9 +189,11 @@ function renderEntries() {
 }
 
 
-/* EINTRAG SPEICHERN */
+// ===============================
+// EINTRAG SPEICHERN
+// ===============================
 
-diaryForm.addEventListener('submit', event => {
+diaryForm.addEventListener("submit", function(event) {
 
     event.preventDefault();
 
@@ -193,7 +205,9 @@ diaryForm.addEventListener('submit', event => {
 
 
     if (!checkedRadio) {
-        alert('Bitte wähle eine Tagesstimmung aus!');
+
+        alert("Bitte wähle eine Stimmung aus.");
+
         return;
     }
 
@@ -203,45 +217,57 @@ diaryForm.addEventListener('submit', event => {
 
 
     if (!comment) {
-        alert('Bitte gib einen Kommentar ein.');
+
+        alert("Bitte gib einen Kommentar ein.");
+
         return;
     }
 
 
+    // Neuen Eintrag erstellen
     const newEntry = {
 
         id: Date.now().toString(),
 
         date: diaryDate.value,
 
-        mood: Number(
-            checkedRadio.value
-        ),
+        mood: Number(checkedRadio.value),
 
         comment: comment
+
     };
 
 
+    // Eintrag ins Array
     diaryEntries.push(newEntry);
 
+
+    // In localStorage speichern
     saveEntries();
 
-    diaryComment.value = '';
+
+    // Anzeige sofort aktualisieren
+    renderEntries();
+
+
+    // Formular zurücksetzen
+    diaryComment.value = "";
 
     checkedRadio.checked = false;
 
     diaryDate.value = getTodayString();
 
-    renderEntries();
 });
 
 
-/* EINTRAG LÖSCHEN */
+// ===============================
+// EINTRAG LÖSCHEN
+// ===============================
 
 function deleteEntry(id) {
 
     if (!confirm(
-        'Möchtest du diesen Tagebucheintrag wirklich löschen?'
+        "Möchtest du diesen Tagebucheintrag wirklich löschen?"
     )) {
         return;
     }
@@ -258,21 +284,23 @@ function deleteEntry(id) {
 }
 
 
-/* JSON EXPORT */
+// ===============================
+// JSON EXPORT
+// ===============================
 
-exportJsonBtn.addEventListener('click', () => {
+exportJsonBtn.addEventListener("click", function() {
 
     if (diaryEntries.length === 0) {
 
         alert(
-            'Es gibt noch keine Einträge zum Exportieren!'
+            "Es gibt noch keine Einträge zum Exportieren!"
         );
 
         return;
     }
 
 
-    const jsonString = JSON.stringify(
+    const json = JSON.stringify(
         diaryEntries,
         null,
         2
@@ -280,16 +308,20 @@ exportJsonBtn.addEventListener('click', () => {
 
 
     const blob = new Blob(
-        [jsonString],
+        [json],
         {
-            type: 'application/json'
+            type: "application/json"
         }
     );
 
 
-    const url = URL.createObjectURL(blob);
+    const url =
+        URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
+
+    const link =
+        document.createElement("a");
+
 
     link.href = url;
 
@@ -304,285 +336,154 @@ exportJsonBtn.addEventListener('click', () => {
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
-
 });
 
 
-/* IMPORT BUTTON */
+// ===============================
+// JSON IMPORT BUTTON
+// ===============================
 
-importJsonBtn.addEventListener('click', () => {
+importJsonBtn.addEventListener("click", function() {
+
     importJsonInput.click();
+
 });
 
 
-/* JSON IMPORT */
+// ===============================
+// JSON IMPORT
+// ===============================
 
-importJsonInput.addEventListener('change', event => {
+importJsonInput.addEventListener(
+    "change",
+    function(event) {
 
-    const file = event.target.files[0];
-
-    if (!file) {
-        return;
-    }
-
-
-    if (!file.name.toLowerCase().endsWith('.json')) {
-
-        alert(
-            'Bitte wähle eine JSON-Datei aus.'
-        );
-
-        importJsonInput.value = '';
-
-        return;
-    }
+        const file =
+            event.target.files[0];
 
 
-    const reader = new FileReader();
+        if (!file) {
+            return;
+        }
 
 
-    reader.onload = () => {
-
-        try {
-
-            const importedData =
-                JSON.parse(reader.result);
+        const reader =
+            new FileReader();
 
 
-            if (!validateImportedData(importedData)) {
+        reader.onload = function() {
 
-                alert(
-                    'Die JSON-Datei hat kein gültiges Tagebuch-Format.'
+            try {
+
+                const importedEntries =
+                    JSON.parse(reader.result);
+
+
+                if (!Array.isArray(importedEntries)) {
+
+                    alert(
+                        "Die JSON-Datei enthält keine gültigen Tagebucheinträge."
+                    );
+
+                    return;
+                }
+                const choice = confirm(
+                    "OK = importierte Einträge hinzufügen\n" +
+                    "Abbrechen = vorhandene Einträge ersetzen"
                 );
 
-                return;
-            }
+
+                if (choice) {
+
+                    // Hinzufügen
+                    importedEntries.forEach(entry => {
+
+                        diaryEntries.push({
+                            id:
+                                Date.now().toString() +
+                                Math.random()
+                                    .toString(36)
+                                    .substring(2),
+
+                            date: entry.date,
+
+                            mood: Number(entry.mood),
+
+                            comment: String(entry.comment)
+                        });
+
+                    });
+
+                } else {
+
+                    // Ersetzen
+                    diaryEntries =
+                        importedEntries.map(entry => ({
+
+                            id:
+                                String(
+                                    entry.id ||
+                                    Date.now().toString()
+                                ),
+
+                            date: entry.date,
+
+                            mood: Number(entry.mood),
+
+                            comment: String(entry.comment)
+
+                        }));
+                }
 
 
-            const action = prompt(
-                'Wie möchtest du importieren?\n\n' +
-                '1 = Einträge zusammenführen\n' +
-                '2 = Vorhandene Einträge ersetzen\n\n' +
-                'Abbrechen = nichts ändern',
-                '1'
-            );
+                saveEntries();
 
+                renderEntries();
 
-            if (action === null) {
-                return;
-            }
-
-
-            if (action === '1') {
-
-                mergeEntries(importedData);
-
-            } else if (action === '2') {
-
-                replaceEntries(importedData);
-
-            } else {
 
                 alert(
-                    'Ungültige Auswahl. Bitte 1 oder 2 eingeben.'
+                    "Die Einträge wurden erfolgreich importiert."
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Import-Fehler:",
+                    error
+                );
+
+
+                alert(
+                    "Die JSON-Datei konnte nicht gelesen werden."
                 );
             }
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                'Die JSON-Datei konnte nicht gelesen werden.'
-            );
-        }
-    };
+        };
 
 
-    reader.onerror = () => {
+        reader.readAsText(file);
 
-        alert(
-            'Die Datei konnte nicht gelesen werden.'
-        );
-    };
-
-
-    reader.readAsText(file);
-
-    importJsonInput.value = '';
-});
-
-
-/* JSON VALIDIEREN */
-
-function validateImportedData(data) {
-
-    if (!Array.isArray(data)) {
-        return false;
+        importJsonInput.value = "";
     }
+);
 
 
-    for (const entry of data) {
+// ===============================
+// NEU LADEN
+// ===============================
 
-        if (
-            typeof entry !== 'object' ||
-            entry === null
-        ) {
-            return false;
-        }
+hardReloadBtn.addEventListener(
+    "click",
+    function() {
 
+        window.location.reload(true);
 
-        if (
-            typeof entry.date !== 'string' ||
-            !/^\d{4}-\d{2}-\d{2}$/.test(entry.date)
-        ) {
-            return false;
-        }
-
-
-        if (
-            !Number.isInteger(Number(entry.mood)) ||
-            Number(entry.mood) < 1 ||
-            Number(entry.mood) > 5
-        ) {
-            return false;
-        }
-
-
-        if (typeof entry.comment !== 'string') {
-            return false;
-        }
     }
+);
 
 
-    return true;
-}
-
-
-/* IMPORTIERTE EINTRÄGE HINZUFÜGEN */
-
-function mergeEntries(importedEntries) {
-
-    let added = 0;
-
-
-    importedEntries.forEach(imported => {
-
-        let id = String(
-            imported.id ||
-            Date.now() +
-            Math.random().toString(36)
-        );
-
-
-        /*
-         * Falls ID bereits existiert,
-         * neue ID erzeugen.
-         */
-
-        while (
-            diaryEntries.some(
-                entry => entry.id === id
-            )
-        ) {
-
-            id =
-                Date.now() +
-                Math.random()
-                    .toString(36);
-        }
-
-
-        diaryEntries.push({
-
-            id: id,
-
-            date: imported.date,
-
-            mood: Number(imported.mood),
-
-            comment: imported.comment
-
-        });
-
-
-        added++;
-    });
-
-
-    saveEntries();
-
-    renderEntries();
-
-
-    alert(
-        ${added} Einträge wurden importiert.
-    );
-}
-
-
-/* VORHANDENE EINTRÄGE ERSETZEN */
-
-function replaceEntries(importedEntries) {
-
-    if (!confirm(
-        'ACHTUNG!\n\n' +
-        'Deine aktuell gespeicherten Einträge werden ersetzt.\n\n' +
-        'Möchtest du wirklich fortfahren?'
-    )) {
-        return;
-    }
-
-
-    diaryEntries =
-        importedEntries.map(entry => ({
-
-            id: String(
-                entry.id ||
-                Date.now() +
-                Math.random().toString(36)
-            ),
-
-            date: entry.date,
-
-            mood: Number(entry.mood),
-
-            comment: entry.comment
-
-        }));
-
-
-    saveEntries();
-
-    renderEntries();
-
-
-    alert(
-        ${diaryEntries.length} Einträge wurden wiederhergestellt.
-    );
-}
-
-
-/* HARD RELOAD */
-
-hardReloadBtn.addEventListener('click', () => {
-
-    const url =
-        new URL(window.location.href);
-
-
-    url.searchParams.set(
-        'reload',
-        Date.now()
-    );
-
-
-    window.location.replace(
-        url.toString()
-    );
-});
-
-
-/* START */
+// ===============================
+// START
+// ===============================
 
 renderEntries();
