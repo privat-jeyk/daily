@@ -1,18 +1,18 @@
 :root {
-    --primary: #4A90E2;       /* Helles Blau – Hauptfarbe */
-    --primary-hover: #357ABD; /* Dunkleres Blau – Hover */
-    
-    --bg: #E6F0FA;            /* Eisblau – Seitenhintergrund */
-    --card-bg: #FFE3B3;       /* Creme-Orange – Karten/helle Flächen */
-    
-    --text: #2C2C2C;          /* Dunkles Grau – gut lesbarer Haupttext */
-    --text-light: #B56F1D;    /* Bernstein – sekundärer Text/Akzente */
-    
-    --border: #4A90E2;        /* Blau – Rahmen/Konturen */
-    --shadow: rgba(74, 144, 226, 0.25); /* Bläulicher Schatten */
-    
-    --star-active: #B56F1D;   /* Bernstein – aktive Sterne */
-    --star-dim: #B8D3F0;      /* Gedämpftes Eisblau – inaktive Sterne */
+    --primary: #4A90E2;
+    --primary-hover: #B56F1D;
+
+    --bg: #E6F0FA;
+    --card-bg: #FFE3B3;
+
+    --text: #2C2C2C;
+    --text-light: #B56F1D;
+
+    --border: #4A90E2;
+    --shadow: rgba(74, 144, 226, 0.25);
+
+    --star-active: #B56F1D;
+    --star-dim: #B8D3F0;
 }
 
 * {
@@ -34,9 +34,20 @@ body {
     margin: 0 auto;
 }
 
-header {
-    text-align: center;
+
+/* HEADER */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
     margin-bottom: 30px;
+}
+
+.header-content {
+    flex: 1;
+    text-align: center;
 }
 
 header h1 {
@@ -45,6 +56,34 @@ header h1 {
     margin-bottom: 10px;
 }
 
+header p {
+    color: var(--text);
+}
+
+
+/* NEU LADEN */
+
+.reload-btn {
+    background: var(--primary);
+    color: white;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+    white-space: nowrap;
+}
+
+.reload-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+
+/* CARDS */
+
 .card {
     background: var(--card-bg);
     border-radius: 8px;
@@ -52,6 +91,14 @@ header h1 {
     margin-bottom: 30px;
     box-shadow: 0 4px 6px var(--shadow);
 }
+
+.card h2 {
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+
+/* FORMULAR */
 
 .form-group {
     margin-bottom: 20px;
@@ -63,20 +110,22 @@ label {
     font-weight: 600;
 }
 
-input[type="date"], textarea {
+input[type="date"],
+textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 6px;
     font-size: 1rem;
-    background: #fafafa;
-    transition: border-color 0.3s ease;
+    background: #FFF8E8;
+    color: var(--text);
 }
 
-input[type="date"]:focus, textarea:focus {
+input[type="date"]:focus,
+textarea:focus {
     outline: none;
     border-color: var(--primary);
-    background: #fff;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
 }
 
 textarea {
@@ -84,7 +133,9 @@ textarea {
     min-height: 120px;
 }
 
-/* Interaktive Rating Bar (Sterne) von rechts nach links für reines CSS-Matching */
+
+/* STERNE */
+
 .rating-bar {
     display: flex;
     flex-direction: row-reverse;
@@ -100,7 +151,7 @@ textarea {
     font-size: 2rem;
     color: var(--star-dim);
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: 0.2s ease;
     margin-bottom: 0;
 }
 
@@ -109,6 +160,13 @@ textarea {
 .rating-bar input:checked ~ label {
     color: var(--star-active);
 }
+
+.rating-bar label:hover {
+    transform: scale(1.1);
+}
+
+
+/* BUTTONS */
 
 .btn {
     display: inline-block;
@@ -120,26 +178,54 @@ textarea {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: 0.2s ease;
     width: 100%;
 }
 
 .btn:hover {
     background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+
+/* IMPORT / EXPORT */
+
+.data-card {
+    border-left: 5px solid var(--primary);
+}
+
+.data-info {
+    margin-bottom: 20px;
+}
+
+.data-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.data-buttons .btn {
+    width: 50%;
 }
 
 .btn-export {
-    background: #2ec4b6;
+    background: var(--text-light);
 }
+
 .btn-export:hover {
-    background: #239a8f;
+    background: var(--primary);
 }
 
-.actions {
-    margin-bottom: 25px;
+.btn-import {
+    background: var(--primary);
 }
 
-/* Tagebuch-Liste Style */
+.btn-import:hover {
+    background: var(--primary-hover);
+}
+
+
+/* EINTRÄGE */
+
 .entry-list h2 {
     margin-bottom: 15px;
     border-bottom: 2px solid var(--primary);
@@ -175,8 +261,13 @@ textarea {
 
 .entry-text {
     white-space: pre-wrap;
-    color: var(--text-light);
+    color: var(--text);
+    padding-right: 100px;
+    word-wrap: break-word;
 }
+
+
+/* LÖSCHEN */
 
 .delete-btn {
     position: absolute;
@@ -184,7 +275,7 @@ textarea {
     right: 20px;
     background: none;
     border: none;
-    color: #ff4d4d;
+    color: #8B0000;
     cursor: pointer;
     font-size: 0.9rem;
     display: none;
@@ -194,9 +285,58 @@ textarea {
     display: block;
 }
 
+
+/* KEINE EINTRÄGE */
+
 .no-entries {
     text-align: center;
     color: var(--text-light);
     font-style: italic;
     padding: 20px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .reload-btn {
+        align-self: flex-end;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .data-buttons {
+        flex-direction: column;
+    }
+
+    .data-buttons .btn {
+        width: 100%;
+    }
+
+    .entry-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .delete-btn {
+        display: block;
+    }
+
+    .entry-text {
+        padding-right: 0;
+        margin-top: 10px;
+    }
 }
