@@ -30,7 +30,8 @@ function getTodayString() {
     const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
 
-    return ${year}-${month}-${day};
+    return `${year}-${month}-${day}`;
+
 }
 
 diaryDate.value = getTodayString();
@@ -326,7 +327,7 @@ exportJsonBtn.addEventListener("click", function() {
     link.href = url;
 
     link.download =
-        tagebuch_backup_${getTodayString()}.json;
+        `tagebuch_backup_${getTodayString()}.json`;
 
 
     document.body.appendChild(link);
