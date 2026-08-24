@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Mein erster Blogpost",
+    "date": "24. August 2026",
+    "excerpt": "Das ist die kurze Vorschau auf den ersten Beitrag...",
+    "content": "Hier steht der vollständige Text des ersten Beitrags. HTML-Tags wie <br> sind erlaubt."
+  },
+  {
+    "id": 2,
+    "title": "Tipps für CSS Flexbox",
+    "date": "23. August 2026",
+    "excerpt": "Flexbox einfach erklärt mit Beispielen...",
+    "content": "Mit Flexbox lassen sich Layouts spielend leicht horizontal und vertikal ausrichten."
+  }
+]
