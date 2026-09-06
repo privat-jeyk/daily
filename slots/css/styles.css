@@ -39,4 +39,11 @@ section {
     background-color: #6996db;
 }
 
+menu {
+    padding: 0.5rem;
+    justify-content: space-between;
+    background-color: #75b3ff;
+    flex-wrap: wrap;
+}
+
 
