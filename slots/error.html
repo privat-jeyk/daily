@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hier entsteht etwas Neues!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: dig 2.5s ease-in-out infinite;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+        }
+        p {
+            font-size: 1.25rem;
+            margin: 0;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        /* Kleine Schaufel-Animation */
+        @keyframes dig {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-20deg) translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Schaufel-Emoji als Icon -->
+        <div class="icon"> shovel </div>
+        <h1>Hier entsteht etwas neues!</h1>
+        <p>Die Seite ist in Kürze wieder Verfügbar</p>
+    </div>
+
+</body>
+</html>
