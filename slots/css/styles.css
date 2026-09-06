@@ -10,3 +10,12 @@ body {
     font-family: 'Courier New', Courier, monospace ;
     justify-content: center;
 }
+
+article {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15% 15% 1rem 1rem;
+    overflow: hidden;
+}
