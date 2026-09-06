@@ -26,3 +26,10 @@ header, section, menu, footer {
     justify-content: center;
 }
 
+header, footer {
+    height: 3rem;
+    color: white;
+    padding: 0.5rem;
+    background-color: #000749;
+}
+
