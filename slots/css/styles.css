@@ -50,4 +50,13 @@ menu output {
     display: block;
 }
 
+menu div {
+    width: 60%;
+    background-color: black;
+    border-radius: 2rem;
+    padding: 0.2rem 1rem 0.2rem 1rem;
+    color: crimson;
+}
+
+
 
