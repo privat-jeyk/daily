@@ -62,6 +62,7 @@ menu button {
     width: 25%;
     border-radius: 2rem;
     background-color: red;
+    border: none;
     font-size: 1.3rem;
 }
 
@@ -71,3 +72,32 @@ img {
     border-radius: 0.5rem;
 }
 
+@media only screen and (max-width: 1024px) {
+    body {
+        padding: 0;
+        background-color: #000749;
+    }
+
+    article {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    img {
+        width: 35%;
+    }
+
+    menu div {
+        width: 100%;
+    }
+
+    menu {
+        gap: 1rem;
+    }
+
+    menu button {
+        width: 40%;
+        height: 2rem;
+    }
+}
