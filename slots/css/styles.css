@@ -61,9 +61,13 @@ menu div {
 menu button {
     width: 25%;
     border-radius: 2rem;
-    border: none;
     background-color: red;
     font-size: 1.3rem;
 }
 
+img {
+    width: 25%;
+    border: 0.5rem solid #000749;
+    border-radius: 0.5rem;
+}
 
