@@ -7,6 +7,6 @@
 body {
     display: flex;
     padding-top: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Courier New', Courier, monospace ;
     justify-content: center;
 }
