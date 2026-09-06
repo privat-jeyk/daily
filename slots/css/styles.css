@@ -46,4 +46,8 @@ menu {
     flex-wrap: wrap;
 }
 
+menu output {
+    display: block;
+}
+
 
