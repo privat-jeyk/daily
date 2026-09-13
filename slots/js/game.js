@@ -1,10 +1,28 @@
-function init() {
-    
+function init(spinButtonId, scoreTextId, infoTextId, slotsContainerId) {
+
+spinButton = document.getElementById(spinButtonId);
+scoreText = document.getElementById(scoreTextId);
+infoText = document.getElementById(infoTextId);
+slotContainer = document.getElementById(slotsContainerId);
+
+score = localStorage.getItem('SpielautomatScore');
+if( score == null ) score = 0;
+score = parseInt(score);
+setScoreText("Score:"+score);
+
+setInfoText("Drücke SPIN zum Spielen");
+
 }
 
 // Rückgabe: Array mit den Slot-Instanzen
-function createSlots() {
+function createSlots( container, count) {
+    let slots=[];
 
+    for(let i=0; i<count; i++) {
+        slots.push( new Slot (40, 15, 9, container));
+    }
+
+    return slots;
 }
 
 // Setzt das Drehen der Slots in Gang
