@@ -1,5 +1,5 @@
 function init() {
-
+    
 }
 
 // Rückgabe: Array mit den Slot-Instanzen
