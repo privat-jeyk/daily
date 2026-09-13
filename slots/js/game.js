@@ -1,3 +1,5 @@
+// Minute 30:00
+
 function init(spinButtonId, scoreTextId, infoTextId, slotsContainerId) {
 
 spinButton = document.getElementById(spinButtonId);
