@@ -2,18 +2,26 @@
 
 function init(spinButtonId, scoreTextId, infoTextId, slotsContainerId) {
 
+// Html-Element gesucht unf zugewiesen
 spinButton = document.getElementById(spinButtonId);
 scoreText = document.getElementById(scoreTextId);
 infoText = document.getElementById(infoTextId);
 slotContainer = document.getElementById(slotsContainerId);
 
+// gespeicherten Score laden und ausgeben
 score = localStorage.getItem('SpielautomatScore');
 if( score == null ) score = 0;
 score = parseInt(score);
 setScoreText("Score:"+score);
 
+// Infotext ausgeben
 setInfoText("Drücke SPIN zum Spielen");
+slots = createSlots( slotContainer, 3);
 
+// interval für die Aktualisierungsfunktion einrichten
+setInterval( update, spinSpeed);
+
+console.log("Init is done");
 }
 
 // Rückgabe: Array mit den Slot-Instanzen
@@ -29,7 +37,7 @@ function createSlots( container, count) {
 
 // Setzt das Drehen der Slots in Gang
 function spin() {
-
+    
 }
 
 // Liefert Zufallszahl inkl. min und max
