@@ -37,32 +37,60 @@ function createSlots( container, count) {
 
 // Setzt das Drehen der Slots in Gang
 function spin() {
-    
+    // Für jede Instanz von Slot Reset ausführen
+    slots.forEach( (slot) => {
+        slot.resetSlot();
+    });
+
+    setInfoText("Viel Glück!");
+    setSpinButton(false);
 }
 
 // Liefert Zufallszahl inkl. min und max
 function getRandomInt(min, max) {
-    
+    return Math.floor(Math.random() * (max - min +1) + min);
 }
 
 // Rückgabe: true oder false, je nachdem ob Drehung in Gang
 function isStillSpinning() {
-    
+    for(let i=0; i< slots.length; i++) {
+        if( slots[i].isStillSpinning() )
+            return true;
+    }
+
+    return false
 }
 
 // Auswertung des Spielergebnisses
 function evaluateRound() {
-    
+    var set = new Set();
+
+    slots.forEach( (slot)=> { set.add(slot.imageNumber) }):
+
+    var points = (slots.length - set.size)*100;
+    if( points >=100)
+        won( points );
+    else
+        lose();
 }
 
 // Gewonnen
 function won(points) {
-    
+    console.log("won:"+ points);
+    setInfoText("Gewonnen ! " + points + "Punkte!");
+    score += points;
+    setScoreText("Score: "+score);
+    localStorage.setItem('SpielautomatScore', score);
+
+    slots.forEach( slot=> {slot.resetSlot() } );
+    setSpinButton(true);
 }
 
 // Verlorem
 function lose() {
-    
+    console.log("lose");
+    setInfoText("Leider nichts, versuch es nochmal!");
+    setSpinButton(true);
 }
 
 // Drehbutton ein und ausschalten
@@ -82,5 +110,12 @@ function setScoreText(txt) {
 
 // Aktualisiert das Spiel regelmässig
 function update() {
-    
+    if(spinButton.disabled) {
+        slots.forEach( (slot)=> {
+            slot.spinSlot();
+        });
+
+        if( !isStillSpinning() )
+            evaluateRound();
+    }
 }
