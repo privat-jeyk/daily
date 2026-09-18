@@ -1,5 +1,3 @@
-// Minute 30:00
-
 function init(spinButtonId, scoreTextId, infoTextId, slotsContainerId) {
 
 // Html-Element gesucht unf zugewiesen
