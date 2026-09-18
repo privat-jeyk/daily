@@ -1,3 +1,5 @@
+// Minute 44
+
 function init(spinButtonId, scoreTextId, infoTextId, slotsContainerId) {
 
 // Html-Element gesucht unf zugewiesen
@@ -63,7 +65,7 @@ function isStillSpinning() {
 function evaluateRound() {
     var set = new Set();
 
-    slots.forEach( (slot)=> { set.add(slot.imageNumber) }):
+    slots.forEach( (slot)=> { set.add(slot.imageNumber) });
 
     var points = (slots.length - set.size)*100;
     if( points >=100)
@@ -93,17 +95,17 @@ function lose() {
 
 // Drehbutton ein und ausschalten
 function setSpinButton( active ) {
-    setSpinButton.disabled = !active;
+    spinButton.disabled = !active;
 }
 
 // Infotext
 function setInfoText(txt) {
-    setInfoText.innerText = txt;
+    infoText.innerText = txt;
 }
 
 // Scoretext
 function setScoreText(txt) {
-    setScoreText.innerText = txt;
+    scoreText.innerText = txt;
 }
 
 // Aktualisiert das Spiel regelmässig
