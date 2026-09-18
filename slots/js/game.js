@@ -82,7 +82,7 @@ function won(points) {
     setScoreText("Score: "+score);
     localStorage.setItem('SpielautomatScore', score);
 
-    slots.forEach( slot=> {slot.resetSlot() } );
+    // slots.forEach( slot=> {slot.resetSlot() } );
     setSpinButton(true);
 }
 
