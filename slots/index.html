@@ -7,7 +7,7 @@
     
     <link rel="stylesheet" href="css/styles.css">
     <title>Privats Slots</title>
-    <script type="text/javascript" src="js/window.js"></script>
+    <!-- <script type="text/javascript" src="js/window.js"></script> -->
     <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="js/Slot.js"></script>
 </head>
@@ -27,5 +27,20 @@
             <p>Bitte Fresse halten</p>
         </footer>
     </article>
+
+    <script>
+        let slotContainer, //Element in dem die Slots sind
+        slots, //Array für Slot-Instanzen
+        spinButton, //Element Spin-Button
+        displayText, //Element Output für Informationen
+        scoreText, // Element Output für den Score
+        score; // Score als Ganzzahl (Integer)
+
+    const spinSpeed = 100;
+
+    window.addEventListener("load", (event) => {
+        init("spinButton", "scoreText", "infoText", "slots");
+    });
+    </script>
 </body>
 </html>
