@@ -21,7 +21,7 @@ class Slot {
     }
 
     spinSlot() {
-        if (this.isStillSpinning) {
+        if (this.isStillSpinning()) {
             this.imageNumber = ++this.imageNumber % (this.imageCount-1);
             this.image.src ="img/Image" + this.imageNumber + ".png";
             this.turn--;
