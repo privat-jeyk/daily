@@ -71,7 +71,15 @@ img {
     border: 0.5rem solid #000749;
     border-radius: 0.5rem;
 }
+/* grosse Bildschirme */
+@media only screen and (min-width: 1024px) {
+    body {
+        padding: 0;
+        background-color: #000749;
+    }
+}
 
+/* kleine Bildschirme */
 @media only screen and (max-width: 1024px) {
     body {
         padding: 0;
