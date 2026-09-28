@@ -38,13 +38,13 @@ header, footer {
     height: 3rem;
     color: white;
     padding: 0.5rem;
-    background-color: #000749;
+    background-color: var(--main);
 }
 
 section {
     padding: 2rem;
     gap: 0.3rem;
-    background-color: #6996db;
+    background-color: var(--main);
 }
 
 menu {
@@ -76,7 +76,7 @@ menu button {
 
 img {
     width: 25%;
-    border: 0.5rem solid #000749;
+    border: 0.5rem solid var(--main);
     border-radius: 0.5rem;
 }
 /* grosse Bildschirme */
@@ -91,7 +91,7 @@ img {
 @media only screen and (max-width: 1024px) {
     body {
         padding: 0;
-        background-color: #000749;
+        background-color: var(--main);
     }
 
     article {
