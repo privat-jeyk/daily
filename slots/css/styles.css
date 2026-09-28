@@ -1,3 +1,11 @@
+:root {
+    --main: #4070F4;
+    --komlementär1: #F4C440;
+    --komlementär2: #CEF440;
+    --komlementär3: #F6A85D;
+    --komlementär4: #CC990C;
+}
+
 * {
     margin: 0;
     padding: 0;
