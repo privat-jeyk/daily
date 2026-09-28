@@ -83,7 +83,7 @@ img {
 @media only screen and (min-width: 1024px) {
     body {
         padding: 0;
-        background-color: #000749;
+        background-color: var(--main);
     }
 }
 
