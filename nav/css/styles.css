@@ -24,12 +24,14 @@ body {
 nav {
     border-radius: 12px;
     background: var(--komlementär1);
+    box-shadow: 0 5px 15px var(--komlementär1);
 }
 
 .nav-content {
     display: flex;
     height: 120px;
     align-items: center;
+    list-style: none;
 }
 
 .link-item {
@@ -39,4 +41,5 @@ nav {
     flex-direction: column;
     height: 120px;
     width: 95px;
+    text-decoration: none;
 }
