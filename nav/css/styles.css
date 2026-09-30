@@ -29,3 +29,10 @@ nav {
 .nav-content {
     display: flex;
 }
+
+.link-item {
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    width: 95px;
+}
