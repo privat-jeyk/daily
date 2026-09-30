@@ -28,11 +28,14 @@ nav {
 
 .nav-content {
     display: flex;
+    height: 120px;
     align-items: center;
 }
 
 .link-item {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     height: 120px;
     width: 95px;
