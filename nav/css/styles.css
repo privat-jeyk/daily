@@ -49,6 +49,10 @@ nav {
     color: #999;
 }
 
+.link-item.active .link-icon {
+    color: #4070F4;
+}
+
 .link-text {
     position: absolute;
     font-size: 12px;
@@ -56,4 +60,5 @@ nav {
     color: #4070F4;
     transform: translateY(32px);
 }
+
 
