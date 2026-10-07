@@ -62,4 +62,8 @@ nav {
     transform: translateY(32px);
 }
 
+.link-item.active .link-text {
+    opacity: 1;
+}
+
 
