@@ -33,6 +33,7 @@ nav {
     align-items: center;
     list-style: none;
     position: relative;
+    background-color: red;
 }
 
 .link-item {
@@ -76,4 +77,5 @@ nav {
     background-color: #fff;
     border: 6px solid #4070F4;
     border-radius: 50%;
+    transform: translateX(-50%);
 }
