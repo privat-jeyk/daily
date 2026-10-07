@@ -50,6 +50,10 @@ nav {
 }
 
 .link-text {
+    position: absolute;
     font-size: 12px;
     font-weight: 500;
+    color: #4070F4;
+    transform: translateY(32px);
 }
+
