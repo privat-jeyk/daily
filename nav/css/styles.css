@@ -43,3 +43,13 @@ nav {
     width: 95px;
     text-decoration: none;
 }
+
+.link-icon {
+    font-size: 38px;
+    color: #999;
+}
+
+.link-text {
+    font-size: 12px;
+    font-weight: 500;
+}
