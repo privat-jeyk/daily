@@ -66,3 +66,14 @@ nav {
 .link-item.active .link-text {
     opacity: 1;
 }
+
+.indicator {
+    position: absolute;
+    top: -14px;
+    left: 48px;
+    height: 36px;
+    width: 36px;
+    background-color: #fff;
+    border: 6px solid #4070F4;
+    border-radius: 50%;
+}
