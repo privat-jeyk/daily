@@ -66,4 +66,14 @@ nav {
     opacity: 1;
 }
 
+.indicator {
+    position: absolute;
+    top: -14px;
+    height: 36px;
+    width: 36px;
+    background-color: #fff;
+    border: 6px solid #4070F4;
+    border-radius: 50%;
+}
+
 
