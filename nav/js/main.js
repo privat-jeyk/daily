@@ -1,0 +1,1 @@
+const linkItems = document.querySelectorAll(".link-item");
