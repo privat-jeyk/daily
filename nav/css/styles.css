@@ -96,7 +96,7 @@ nav {
     left: -22px;
     background-color: var(--komlementär1);
     border-top-right-radius: 25px;
-    box-shadow: 1px -13px var(--main);
+    box-shadow: -1px -13px var(--main);
 }
 
 .indicator::after {
