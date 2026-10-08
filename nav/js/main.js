@@ -10,3 +10,4 @@ linkItems.forEach((linkItem, index) => {
         indicator.style.left = `${index * 95 + 48}px`
     })
 })
+minute 17
