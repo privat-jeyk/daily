@@ -3,6 +3,9 @@
 :root {
             --main: #4070F4;
             --komlementär1: #F4C440;
+            --komlementär2: #CEF440;
+            --komlementär3: #F6A85D;
+            --komlementär4: #CC990C;
         }
 /* Allgemeine Sachen */
 * {
@@ -91,14 +94,14 @@ nav {
 
 .indicator::before {
     left: -22px;
-    background-color: #fff;
+    background-color: var(--komlementär1);
     border-top-right-radius: 25px;
     box-shadow: 1px -13px #4070F4;
 }
 
 .indicator::after {
     right: -22px;
-    background-color: #fff;
+    background-color: var(--komlementär1);
     border-top-left-radius: 25px;
     box-shadow: 1px -13px #4070F4;
 }
