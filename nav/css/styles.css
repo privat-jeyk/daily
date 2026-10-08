@@ -91,7 +91,16 @@ nav {
 
 .indicator::before {
     left: -22px;
-    background-color: red;
+    background-color: #000;
+    border-top-right-radius: 25px;
+    box-shadow: 1px -13px #4070F4;
+}
+
+.indicator::after {
+    right: -22px;
+    background-color: #000;
+    border-top-left-radius: 25px;
+    box-shadow: 1px -13px #4070F4;
 }
 /* https://www.youtube.com/watch?v=9aaZUSdA2g0&list=PPSV
 12:12 Minute */
