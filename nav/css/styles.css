@@ -91,14 +91,14 @@ nav {
 
 .indicator::before {
     left: -22px;
-    background-color: #000;
+    background-color: #fff;
     border-top-right-radius: 25px;
     box-shadow: 1px -13px #4070F4;
 }
 
 .indicator::after {
     right: -22px;
-    background-color: #000;
+    background-color: #fff;
     border-top-left-radius: 25px;
     box-shadow: 1px -13px #4070F4;
 }
