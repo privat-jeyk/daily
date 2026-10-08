@@ -80,5 +80,18 @@ nav {
     transform: translateX(-50%);
 }
 
-https://www.youtube.com/watch?v=9aaZUSdA2g0&list=PPSV
-12:12 Minute
+.indicator::before,
+.indicator::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    height: 24px;
+    width: 19px;
+}
+
+.indicator::before {
+    left: -22px;
+    background-color: red;
+}
+/* https://www.youtube.com/watch?v=9aaZUSdA2g0&list=PPSV
+12:12 Minute */
