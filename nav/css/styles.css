@@ -55,14 +55,14 @@ nav {
 }
 
 .link-item.active .link-icon {
-    color: #4070F4;
+    color: var(--main);
 }
 
 .link-text {
     position: absolute;
     font-size: 12px;
     font-weight: 500;
-    color: #4070F4;
+    color: var(--main);
     opacity: 0;
     transform: translateY(32px);
 }
@@ -78,7 +78,7 @@ nav {
     height: 36px;
     width: 36px;
     background-color: #fff;
-    border: 6px solid #4070F4;
+    border: 6px solid var(--main);
     border-radius: 50%;
     transform: translateX(-50%);
 }
@@ -96,14 +96,14 @@ nav {
     left: -22px;
     background-color: var(--komlementär1);
     border-top-right-radius: 25px;
-    box-shadow: 1px -13px #4070F4;
+    box-shadow: 1px -13px var(--main);
 }
 
 .indicator::after {
     right: -22px;
     background-color: var(--komlementär1);
     border-top-left-radius: 25px;
-    box-shadow: 1px -13px #4070F4;
+    box-shadow: 1px -13px var(--main);
 }
 /* https://www.youtube.com/watch?v=9aaZUSdA2g0&list=PPSV
 12:12 Minute */
