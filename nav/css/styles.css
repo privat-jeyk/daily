@@ -73,7 +73,7 @@ nav {
 
 .indicator {
     position: absolute;
-    bottom: -14px;
+    top: -14px;
     left: 48px;
     height: 36px;
     width: 36px;
