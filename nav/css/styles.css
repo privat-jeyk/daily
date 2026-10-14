@@ -47,6 +47,11 @@ nav {
     height: 120px;
     width: 95px;
     text-decoration: none;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.link-item.active {
+    transform: translateY(-10px);
 }
 
 .link-icon {
