@@ -58,3 +58,8 @@ dialog {
     border: none;
     margin: 1rem auto;
 }
+
+@keyframes slide-in {
+    from{ margin: -50rem auto;}
+    to { margin: 1rem auto;}
+}
