@@ -34,7 +34,7 @@ form {
     
     border: 1px solid grey;
     border-radius: 0.25rem;
-    background-color: blue;
+    background-color: lightblue;
 
     div{
        display:flex;
