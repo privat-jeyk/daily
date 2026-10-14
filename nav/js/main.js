@@ -7,7 +7,7 @@ linkItems.forEach((linkItem, index) => {
 
         const indicator = document.querySelector(".indicator");
 
-        indicator.style.left = `${index * 95 + 48}px`
+        indicator.style.left = `${index * 95 + 48}px`;
     })
 })
 // minute 17
