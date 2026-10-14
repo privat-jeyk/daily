@@ -21,8 +21,8 @@ body {
     display: flex;
 
     /* hier wurde was geändert center zu top */
-    align-items: top;
-    
+    align-items: center;
+
     justify-content: center;
     background: var(--main);
 }
