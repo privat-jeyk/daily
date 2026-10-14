@@ -19,7 +19,10 @@
 body {
     height: 100vh;
     display: flex;
+
+    /* hier wurde was geändert center zu top */
     align-items: top;
+    
     justify-content: center;
     background: var(--main);
 }
