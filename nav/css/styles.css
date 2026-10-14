@@ -52,6 +52,7 @@ nav {
 .link-icon {
     font-size: 38px;
     color: var(--komlementär4);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .link-item.active .link-icon {
@@ -65,6 +66,7 @@ nav {
     color: var(--main);
     opacity: 0;
     transform: translateY(32px);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .link-item.active .link-text {
