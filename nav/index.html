@@ -12,9 +12,6 @@
 
     <!-- Boxicons Css -->
      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-    <!-- Javascript -->
-    <!-- <script src="js/main.js"></script> -->
 </head>
 <body>
     <nav class="nav">
@@ -67,19 +64,7 @@
             <span class="indicator"></span>
         </ul>
     </nav>
-    <script>
-    const linkItems = document.querySelectorAll(".link-item");
-
-    linkItems.forEach((linkItem, index) => {
-    linkItem.addEventListener("click", () => {
-        document.querySelector(".active").classList.remove("active");
-        linkItem.classList.add("active");
-
-        const indicator = document.querySelector(".indicator");
-
-        indicator.style.left = `${index * 95 + 48}px`;
-    })
-})
-    </script>
+    <!-- Javascript -->
+    <script src="js/main.js"></script>
 </body>
 </html>

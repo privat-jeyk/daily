@@ -7,7 +7,9 @@ linkItems.forEach((linkItem, index) => {
 
         const indicator = document.querySelector(".indicator");
 
-        indicator.style.left = `${index * 95 + 48}px`;
+        // Hier wurde das "þ" durch ein normales "p" ersetzt
+        indicator.style.left = `${index * 95 + 48}px`; 
     })
 })
+
 // minute 17
