@@ -3,15 +3,15 @@
     "short_name": "Spielautomat",
     "icons": [
         {
-            "src": "img/icon512.png",
+            "src": "img/icon512.jpeg",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/jpeg"
         }
     ],
     "lang": "de",
     "start_url": "index.html",
     "display": "standalone",
-    "background_color": "white",
+    "background_color": "lightblue",
     "theme_color": "white",
     "orientation": "portrait"
 }
