@@ -1,0 +1,17 @@
+{
+    "name": "SlotSpiel",
+    "short_name": "Spielautomat",
+    "icons": [
+        {
+            "src": "img/icon512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "lang": "de",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "white",
+    "theme_color": "white",
+    "orientation": "portrait"
+}
