@@ -1,14 +1,37 @@
 [
   {
+    "_comment": "Rezept 1",
     "id": 1,
-    "titel": "Magisches Gericht",
+    "titel": "Rezept 1",
     "bild": "img/magie.jpg",
-    "zutaten": "1 Prise Feenstaub\n2 Tropfen Zaubertrank\n100g Geheimnis"
+    "zutaten": "...\n...<"
   },
   {
+    "_comment": "Rezept 2",
     "id": 2,
-    "titel": "Klassischer Pfannkuchen",
+    "titel": "Rezept 2",
     "bild": "img/magie.jpg",
-    "zutaten": "200g Mehl\n3 Eier\n300ml Milch"
+    "zutaten": "...\n...<"
+  },
+  {
+    "_comment": "Rezept 3",
+    "id": 3,
+    "titel": "Rezept 3",
+    "bild": "img/magie.jpg",
+    "zutaten": "...\n...<"
+  },
+  {
+    "_comment": "Rezept 4",
+    "id": 4,
+    "titel": "Rezept 4",
+    "bild": "img/magie.jpg",
+    "zutaten": "...\n...<"
+  },
+  {
+    "_comment": "Rezept 5",
+    "id": 5,
+    "titel": "Rezept 5",
+    "bild": "img/magie.jpg",
+    "zutaten": "...\n...<"
   }
 ]
