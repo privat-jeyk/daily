@@ -59,28 +59,42 @@
         /* Rezeptliste Styling */
         .rezept-liste {
             display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
         .rezept-karte {
             background: white;
-            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .rezept-bild {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+        .rezept-inhalt {
+            padding: 15px;
         }
         .loesch-btn {
             background-color: #f44336;
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
             padding: 5px 10px;
             font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         .zutaten {
             white-space: pre-line;
             background: #eee;
             padding: 10px;
             border-radius: 4px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -92,14 +106,15 @@
     <!-- Formular zum Hinzufügen -->
     <form id="rezept-form">
         <h2>Neues Rezept hinzufügen</h2>
+        
+        <label for="bild">Rezept-Bild auswählen:</label>
+        <input type="file" id="bild" accept="image/*">
+
         <label for="titel">Name des Gerichts:</label>
         <input type="text" id="titel" required placeholder="Z.B. Spaghetti Carbonara">
 
         <label for="zutaten">Zutaten (eine pro Zeile):</label>
-        <textarea id="zutaten" rows="4" required placeholder="Z.B.&#10;200g Spaghetti&#10;100g Speck"></textarea>
-
-        <label for="anleitung">Zubereitung:</label>
-        <textarea id="anleitung" rows="4" required placeholder="Schritt für Schritt Anleitung..."></textarea>
+        <textarea id="zutaten" rows="6" required placeholder="Z.B.&#10;200g Spaghetti&#10;100g Speck&#10;2 Eier"></textarea>
 
         <button type="submit">Rezept speichern</button>
     </form>
@@ -117,33 +132,50 @@
 </div>
 
 <script>
-    // 1. Daten beim Start laden (entweder aus dem LocalStorage oder leeres Array)
+    // 1. Daten beim Start laden
     let rezepte = JSON.parse(localStorage.getItem('rezepte')) || [];
 
     const form = document.getElementById('rezept-form');
     const liste = document.getElementById('rezept-liste');
 
+    // Platzhalter-Bild falls kein Bild hochgeladen wird
+    const standardBild = "data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='100' height='100' viewBox='0 0 24 24' fill='%23aaa'><path d='M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z'/></svg>";
+
     // 2. Event-Listener für das Formular
     form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Verhindert das Neuladen der Seite
+        e.preventDefault();
 
-        // Werte auslesen
-        const neuesRezept = {
-            id: Date.now(), // Eindeutige ID erzeugen
-            titel: document.getElementById('titel').value,
-            zutaten: document.getElementById('zutaten').value,
-            anleitung: document.getElementById('anleitung').value
+        const titel = document.getElementById('titel').value;
+        const zutaten = document.getElementById('zutaten').value;
+        const bildInput = document.getElementById('bild');
+
+        // Funktion zum Erstellen des Rezept-Objekts
+        const erstelleRezept = (bildDaten) => {
+            const neuesRezept = {
+                id: Date.now(),
+                titel: titel,
+                zutaten: zutaten,
+                bild: bildDaten || standardBild
+            };
+
+            rezepte.push(neuesRezept);
+            speichereDaten();
+            rendereRezepte();
+            form.reset();
         };
 
-        // Rezept zum Array hinzufügen
-        rezepte.push(neuesRezept);
-        
-        // Speichern und Oberfläche aktualisieren
-        speichereDaten();
-        rendereRezepte();
-
-        // Formular zurücksetzen
-        form.reset();
+        // Prüfen, ob ein Bild ausgewählt wurde
+        if (bildInput.files && bildInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                // Konvertiert das Bild in einen Base64-String, der im JSON gespeichert werden kann [1]
+                erstelleRezept(event.target.result);
+            };
+            reader.readAsDataURL(bildInput.files[0]);
+        } else {
+            // Wenn kein Bild gewählt wurde, Standardbild nutzen
+            erstelleRezept(null);
+        }
     });
 
     // 3. Rezepte im Browser-Speicher sichern
@@ -153,10 +185,10 @@
 
     // 4. Rezepte auf der Webseite anzeigen
     function rendereRezepte() {
-        liste.innerHTML = ''; // Liste leeren
+        liste.innerHTML = '';
 
         if (rezepte.length === 0) {
-            liste.innerHTML = '<p>Noch keine Rezepte eingetragen.</p>';
+            liste.innerHTML = '<p style="grid-column: 1/-1;">Noch keine Rezepte eingetragen.</p>';
             return;
         }
 
@@ -165,12 +197,13 @@
             karte.className = 'rezept-karte';
             
             karte.innerHTML = `
-                <h3>${rezept.titel}</h3>
+                <img class="rezept-bild" src="${rezept.bild}" alt="${rezept.titel}">
                 <button class="loesch-btn" onclick="loescheRezept(${rezept.id})">Löschen</button>
-                <h4>Zutaten:</h4>
-                <p class="zutaten">${rezept.zutaten}</p>
-                <h4>Zubereitung:</h4>
-                <p>${rezept.anleitung.replace(/\n/g, '<br>')}</p>
+                <div class="rezept-inhalt">
+                    <h3>${rezept.titel}</h3>
+                    <h4>Zutaten:</h4>
+                    <p class="zutaten">${rezept.zutaten}</p>
+                </div>
             `;
             liste.appendChild(karte);
         });
@@ -183,12 +216,12 @@
         rendereRezepte();
     }
 
-    // 6. JSON-Datei herunterladen (Export)
+    // 6. JSON-Datei herunterladen (Export) inkl. Bildern
     function exportiereJSON() {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(rezepte, null, 2));
         const downloadAnchor = document.createElement('a');
         downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", "rezepte_backup.json");
+        downloadAnchor.setAttribute("download", "rezeptbuch_mit_bildern.json");
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
@@ -207,7 +240,7 @@
                     rezepte = importierteRezepte;
                     speichereDaten();
                     rendereRezepte();
-                    alert('Rezepte erfolgreich importiert!');
+                    alert('Rezepte inklusive Bilder erfolgreich importiert!');
                 } else {
                     alert('Ungültiges Dateiformat.');
                 }
