@@ -1,14 +1,15 @@
 [
   {
     "id": 1,
-    "titel": "Spaghetti Carbonara",
+    "titel": "Magisches Gericht",
     "bild": "img/magie.jpg",
-    "zutaten": "200g Spaghetti\n100g Guanciale oder Speck\n2 frische Eigelb\n50g Pecorino Romano\nFrischer Pfeffer"
+    "zutaten": "1 Prise Feenstaub\n2 Tropfen Zaubertrank\n100g Geheimnis"
   },
   {
     "id": 2,
     "titel": "Klassischer Pfannkuchen",
-    "bild": "img/magie.jpg",
-    "zutaten": "200g Mehl\n3 Eier\n300ml Milch\n1 Prise Salz\nEtwas Butter zum Ausbacken"
+    "bild": "https://unsplash.com",
+    "zutaten": "200g Mehl\n3 Eier\n300ml Milch"
   }
 ]
+
