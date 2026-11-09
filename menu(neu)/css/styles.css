@@ -65,7 +65,7 @@ nav {
     font-weight: 600;
     font-size: 1rem;
     background: var(--text2);
-    color: var(--text1);
+    color: var(--bg1); /* Geändert von --text1 (weiß) auf --bg1 (dunkelblau) für perfekten Kontrast */
     box-shadow: 0 0 15px var(--text2);
     border: none;
     cursor: pointer;
