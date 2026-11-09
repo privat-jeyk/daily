@@ -1,13 +1,17 @@
-:root {
+/* :root {
 --main: #4070F4;
 --text1:  #F4C440;
 --bg1: #F46E40;
 --text2: #CEF440;
 --text3: #F6A85D;
-
-/* 
-#F6A85D (Pastell-Kontrast – ein sanfteres, warmes Apricot/Goldorange)
-#CC990C (Dunkler Akzent – ein edles Senfgelb / dunkler Goldton) */
+--text4: #CC990C; */
+:root {
+--main: #130be0;
+--text1:  #e07e0b;
+--bg1: #d8e00b;
+--text2: #6ee00b;
+--text3: #faff6e;
+--text4: #CC990C;
 }
 
 * {
