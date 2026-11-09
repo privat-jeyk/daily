@@ -1,10 +1,10 @@
 :root {
-    --main: #130be0;   /* Dein reines Königsblau */
-    --bg1:  #ffffff;   /* Neutrales Weiß, damit das Design atmen kann */
-    --text1: #0f172a;  /* Ein sehr dunkles Blau/Schwarz für perfekte Lesbarkeit */
-    --text2: #d8e00b;  /* Die direkte Komplementärfarbe (Limone) als strahlender Akzent */
-    --text3: #6ee00b;  /* Split-Komplementär (Grün) für Hover-Effekte */
-    --text4: #e07e0b;  /* Split-Komplementär (Orange) als edler Zweitakzent */
+--main: #130be0;   /* Dein reines Königsblau */
+--bg1:  #0a067a;   /* Eine harmonische, dunkelblaue Abdunkelung für die Navbar */
+--text1: #ffffff;  /* Reines Weiß für perfekten Textkontrast auf dem blauen Body */
+--text2: #d8e00b;  /* Die direkte Komplementärfarbe (Gelb) als Akzent für Logo & Buttons */
+--text3: #6ee00b;  /* Die Split-Komplementärfarbe (Grün) für den Hover-Effekt */
+--text4: #faff6e;  /* Das sanftere Pastell-Gelb für die normalen Nav-Links */
 }
 
 * {
@@ -15,32 +15,28 @@
 
 body {
     font-family: "Poppins", sans-serif;
-    background: var(--bg1);       /* Weißer Hintergrund für modernen Look */
-    color: var(--text1);          /* Dunkler Text für Barrierefreiheit */
+    background: var(--main);
+    color: var(--text1);
 }
 
 h2 {
     text-align: center;
     padding: 2rem;
-    color: var(--main);           /* Überschrift in deinem intensiven Blau */
 }
 
 nav {
     width: 100%;
     padding: 1rem 5%;
-    background: var(--main);      /* Die Navbar nutzt dein starkes Hauptblau */
-    border-bottom: 1px solid var(--main);
-    display: flex;                /* Richtet Logo und Links nebeneinander aus */
-    justify-content: space-between;
-    align-items: center;
+    background: var(--bg1);
+    border-bottom: 1px solid var(--bg1);
+    backdrop-filter: blur(15px);
     margin-bottom: 2rem;
-    box-shadow: 0 4px 12px rgba(19, 11, 224, 0.15);
 }
 
 .logo {
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--text2);          /* Gelbes Komplementär-Logo flasht perfekt auf Blau */
+    color: var(--text2);
     letter-spacing: 1px;
 }
 
@@ -48,7 +44,6 @@ nav {
     list-style: none;
     display: flex;
     gap: 2rem;
-    align-items: center;
 }
 
 .nav-links li a {
@@ -56,29 +51,28 @@ nav {
     font-size: 1.05rem;
     font-weight: 500;
     text-decoration: none;
-    color: #ffffff;               /* Weißer Text auf blauem Grund für Lesbarkeit */
-    transition: color 0.2s;
+    color: var(--text4);
 }
 
 .nav-links li a:hover {
-    color: var(--text2);          /* Link färbt sich beim Hover gelb */
+    color: var(--text2);
+    text-shadow: 0 0 10px var(--text2);
 }
 
 .btn {
-    padding: 0.6rem 1.5rem;
+    padding: 0.5rem 1.5rem;
     border-radius: 30px;
     font-weight: 600;
     font-size: 1rem;
-    background: var(--text4);     /* Orangefarbener Button zieht alle Blicke auf sich */
-    color: #ffffff;
+    background: var(--text2);
+    color: var(--text1);
+    box-shadow: 0 0 15px var(--text2);
     border: none;
     cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(224, 126, 11, 0.3);
+    transition: 0.3s;
 }
 
 .btn:hover {
-    background: var(--text3);     /* Button wird beim Hover apfelgrün */
-    box-shadow: 0 4px 15px rgba(110, 224, 11, 0.4);
-    transform: translateY(-1px);
+    background: var(--text2);
+    box-shadow: 0 0 25px var(--text2);
 }
