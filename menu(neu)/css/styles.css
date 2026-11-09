@@ -1,3 +1,25 @@
+:root {
+--main: #4070F4, /*basierend auf dem gegenüberliegenden warmen Farbspektrum (Gelb, Orange, Gold):*/
+--bg1:  #F4C440, /*(Exakte Komplementärfarbe – ein warmes, sattes Sonnengelb)*/
+
+/* #F46E40 (Split-Komplementär links – ein kräftiges Korallenorange)
+#CEF440 (Split-Komplementär rechts – ein lebendiges Limettengelb)
+#F6A85D (Pastell-Kontrast – ein sanfteres, warmes Apricot/Goldorange)
+#CC990C (Dunkler Akzent – ein edles Senfgelb / dunkler Goldton) */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
 h2 {
     text-align: center;
     padding: 2rem;
