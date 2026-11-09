@@ -2,8 +2,9 @@
 --main: #4070F4;
 --text1:  #F4C440;
 --bg1: #F46E40;
+--text2: #CEF440;
 
-/* #F46E40 (Split-Komplementär links – ein kräftiges Korallenorange)
+/* 
 #CEF440 (Split-Komplementär rechts – ein lebendiges Limettengelb)
 #F6A85D (Pastell-Kontrast – ein sanfteres, warmes Apricot/Goldorange)
 #CC990C (Dunkler Akzent – ein edles Senfgelb / dunkler Goldton) */
@@ -33,4 +34,11 @@ nav {
     border-bottom: 1px solid var(--bg1);
     backdrop-filter: blur(15px);
     margin-bottom: 2rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text2);
+    letter-spacing: 1px;
 }
