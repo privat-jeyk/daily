@@ -31,6 +31,10 @@ nav {
     border-bottom: 1px solid var(--bg1);
     backdrop-filter: blur(15px);
     margin-bottom: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .logo {
