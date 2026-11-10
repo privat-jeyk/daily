@@ -5,6 +5,7 @@
 --text2: #d8e00b;  /* Die direkte Komplementärfarbe (Gelb) als Akzent für Logo & Buttons */
 --text3: #6ee00b;  /* Die Split-Komplementärfarbe (Grün) für den Hover-Effekt */
 --text4: #faff6e;  /* Das sanftere Pastell-Gelb für die normalen Nav-Links */
+--font: 'Nunito', sans-serif;
 }
 
 * {
@@ -13,3 +14,17 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font);
+}
+
+nav {
+    width: 100%;
+    padding: 18px 32px;
+    position: fixed;
+    top: 2px;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+}
