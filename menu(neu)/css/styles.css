@@ -42,5 +42,10 @@ nav {
     box-shadow: 
         8px 8px 20px var(--text2),
         -4px -4px 12px var(--text4);
+}
 
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text1);
 }
